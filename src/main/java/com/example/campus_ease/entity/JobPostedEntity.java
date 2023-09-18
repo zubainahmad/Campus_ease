@@ -3,6 +3,7 @@ package com.example.campus_ease.entity;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.Lob;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -30,7 +31,10 @@ public class JobPostedEntity {
 
     private String regLink;
 
-    String startDate;
+    private String startDate;
 
-    String endDate;
+    private String endDate;
+
+    private String file;
+
 }

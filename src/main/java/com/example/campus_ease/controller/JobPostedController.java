@@ -5,10 +5,10 @@ import com.example.campus_ease.request.JobPostedReq;
 import com.example.campus_ease.service.JobPostedService;
 import com.example.campus_ease.shared.dto.JobPostedDto;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
 
 @RestController
 @RequestMapping("/jobs")
@@ -23,8 +23,7 @@ public class JobPostedController {
     }
 
     @PostMapping
-    public ResponseEntity<String> addJob(@RequestBody JobPostedReq jobPostedReq) {
-
+    public ResponseEntity<String> addJob(@RequestBody JobPostedReq jobPostedReq){
         JobPostedDto jobPostedDto = jobPostedMapper.jobPostedRequestToJobPostedDto(jobPostedReq);
         JobPostedDto addedJob = jobPostedService.addJob(jobPostedDto);
         return ResponseEntity.ok().body("Job added successfully");

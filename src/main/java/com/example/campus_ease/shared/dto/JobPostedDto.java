@@ -23,9 +23,11 @@ public class JobPostedDto {
 
     private String regLink;
 
-    String startDate;
+    private String file;
 
-    String endDate;
+    private String startDate;
+
+    private String endDate;
 
 
 }
