@@ -1,6 +1,5 @@
-package com.example.campus_ease.request;
+package com.example.campus_ease.response;
 
-import com.example.campus_ease.entity.JobManagementEntity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -10,8 +9,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @Getter
 @Setter
-public class JobPostedReq {
-
+public class JobResponse {
     private String companyName;
 
     private String jobDescription;
@@ -29,7 +27,4 @@ public class JobPostedReq {
     private String endDate;
 
     private Long departmentId;
-
-    private JobManagementEntity management;
-
 }

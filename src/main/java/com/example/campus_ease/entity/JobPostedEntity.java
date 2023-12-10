@@ -5,7 +5,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.web.multipart.MultipartFile;
 
 @Entity
 @NoArgsConstructor
@@ -36,7 +35,7 @@ public class JobPostedEntity {
 
     private Long departmentId;
 
-    @OneToOne(targetEntity = JobManagement.class, cascade = CascadeType.ALL)
-    private JobManagement management;
+    @OneToOne(targetEntity = JobManagementEntity.class, cascade = CascadeType.ALL)
+    private JobManagementEntity management;
 
 }

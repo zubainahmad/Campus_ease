@@ -5,8 +5,11 @@ import com.example.campus_ease.dao.JobPostedRepo;
 import com.example.campus_ease.entity.JobPostedEntity;
 import com.example.campus_ease.mapper.JobPostedMapper;
 import com.example.campus_ease.service.JobPostedService;
+import com.example.campus_ease.shared.dto.JobManagementDto;
 import com.example.campus_ease.shared.dto.JobPostedDto;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
 
 @Service
 public class JobPostedServiceImpl implements JobPostedService {
@@ -22,6 +25,11 @@ public class JobPostedServiceImpl implements JobPostedService {
 
     @Override
     public JobPostedDto addJob(JobPostedDto jobPostedDto) {
+        if(jobPostedDto.getManagement()==null){
+            JobManagementDto jobManagementDto = new JobManagementDto();
+            jobManagementDto.setAppliedStudents(new ArrayList<>());
+            jobPostedDto.setManagement(jobManagementDto);
+        }
         JobPostedEntity jobPostedEntity = jobPostedMapper.jobPostedDtoToJobPostedEntity(jobPostedDto);
         JobPostedEntity standardEntity = jobPostedRepo.save(jobPostedEntity);
         JobPostedDto addedJob = jobPostedMapper.jobPostedEntityToJobPostedDto(standardEntity);

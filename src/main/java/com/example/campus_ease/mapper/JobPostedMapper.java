@@ -3,6 +3,7 @@ package com.example.campus_ease.mapper;
 import com.example.campus_ease.controller.JobPostedController;
 import com.example.campus_ease.entity.JobPostedEntity;
 import com.example.campus_ease.request.JobPostedReq;
+import com.example.campus_ease.response.JobResponse;
 import com.example.campus_ease.shared.dto.JobPostedDto;
 import org.mapstruct.BeforeMapping;
 import org.mapstruct.Mapper;
@@ -20,4 +21,5 @@ public interface JobPostedMapper {
 
     JobPostedDto jobPostedEntityToJobPostedDto(JobPostedEntity jobPostedEntity);
 
+    JobResponse jobPostedDtoToJobResponse(JobPostedDto jobPostedDto);
 }

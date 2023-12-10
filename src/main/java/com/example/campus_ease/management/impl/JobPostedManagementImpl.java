@@ -5,8 +5,11 @@ import com.example.campus_ease.shared.dto.JobPostedDto;
 
 import com.example.campus_ease.service.JobPostedService;
 import jakarta.transaction.Transactional;
+import org.springframework.context.annotation.Bean;
+import org.springframework.stereotype.Component;
 
 @Transactional
+@Component
 public class JobPostedManagementImpl implements JobPostedManagement {
     private JobPostedService jobPostedService;
 
