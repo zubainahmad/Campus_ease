@@ -1,9 +1,6 @@
 package com.example.campus_ease.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.Lob;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -36,5 +33,10 @@ public class JobPostedEntity {
     private String endDate;
 
     private String file;
+
+    private Long departmentId;
+
+    @OneToOne(targetEntity = JobManagement.class, cascade = CascadeType.ALL)
+    private JobManagement management;
 
 }
