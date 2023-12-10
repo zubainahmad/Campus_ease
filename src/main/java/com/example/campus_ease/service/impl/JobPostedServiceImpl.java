@@ -1,14 +1,15 @@
-package com.example.campus_ease.service;
+package com.example.campus_ease.service.impl;
 
 import com.example.campus_ease.controller.JobPostedController;
 import com.example.campus_ease.dao.JobPostedRepo;
 import com.example.campus_ease.entity.JobPostedEntity;
 import com.example.campus_ease.mapper.JobPostedMapper;
+import com.example.campus_ease.service.JobPostedService;
 import com.example.campus_ease.shared.dto.JobPostedDto;
 import org.springframework.stereotype.Service;
 
 @Service
-public class JobPostedServiceImpl implements JobPostedService{
+public class JobPostedServiceImpl implements JobPostedService {
 
     private JobPostedRepo jobPostedRepo;
 
