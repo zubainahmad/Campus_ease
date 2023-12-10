@@ -29,5 +29,7 @@ public class JobPostedDto {
 
     private String endDate;
 
+private Long departmentId;
+
 
 }
