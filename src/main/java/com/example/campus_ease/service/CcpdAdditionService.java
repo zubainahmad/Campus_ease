@@ -4,5 +4,5 @@ import com.example.campus_ease.shared.dto.CcpdAdditionDto;
 
 public interface CcpdAdditionService {
 
-    public CcpdAdditionDto addCcpd(CcpdAdditionDto ccpdAdditionDto);
+     CcpdAdditionDto addCcpd(CcpdAdditionDto ccpdAdditionDto);
 }

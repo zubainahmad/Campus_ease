@@ -4,6 +4,8 @@ import com.example.campus_ease.dao.JobPostedRepo;
 import com.example.campus_ease.dao.StudentInfoRepo;
 import com.example.campus_ease.entity.JobPostedEntity;
 import com.example.campus_ease.mapper.JobPostedMapper;
+import com.example.campus_ease.response.JobRes;
+import com.example.campus_ease.response.JobResponse;
 import com.example.campus_ease.service.JobFetchService;
 import com.example.campus_ease.shared.dto.JobPostedDto;
 import org.springframework.stereotype.Service;
@@ -24,23 +26,50 @@ public class JobFetchServiceImpl implements JobFetchService {
     }
 
     @Override
-    public ArrayList<JobPostedDto> getJobs (Long user_id) {
+    public JobRes getJobs (Long user_id) {
         Long departmentId = studentInfoRepo.findById(user_id).get().getBranchId();
         ArrayList<JobPostedEntity> jobPostedEntities = jobPostedRepo.findByDepartmentId(departmentId);
-        ArrayList<Long> job_ids = new ArrayList<>();
+        ArrayList<Long> unfilledID = new ArrayList<>();
+        ArrayList<Long> filledID = new ArrayList<>();
         for (JobPostedEntity jobPostedEntity : jobPostedEntities) {
             ArrayList<Long> appliedStudents = jobPostedEntity.getManagement().getAppliedStudents();
             if(!appliedStudents.contains(user_id)){
-                job_ids.add(jobPostedEntity.getId());
+                unfilledID.add(jobPostedEntity.getId());
+            }
+            else
+            {
+                filledID.add(jobPostedEntity.getId());
             }
         }
-        ArrayList<JobPostedDto> jobPostedDtos = new ArrayList<>();
-        for (Long job_id:job_ids) {
+        ArrayList<JobPostedDto> standardUnfilled = new ArrayList<>();
+        for (Long job_id: unfilledID) {
             JobPostedEntity jobPostedEntity = jobPostedRepo.findById(job_id).get();
-            jobPostedDtos.add(jobPostedMapper.jobPostedEntityToJobPostedDto(jobPostedEntity));
+            standardUnfilled.add(jobPostedMapper.jobPostedEntityToJobPostedDto(jobPostedEntity));
         }
 
-        return jobPostedDtos;
+        ArrayList<JobPostedDto> standardFilled = new ArrayList<>();
+        for (Long job_id: filledID) {
+            JobPostedEntity jobPostedEntity = jobPostedRepo.findById(job_id).get();
+            standardFilled.add(jobPostedMapper.jobPostedEntityToJobPostedDto(jobPostedEntity));
+        }
+
+        ArrayList<JobResponse> unfilled = new ArrayList<>();
+        for (JobPostedDto jobPostedDto:standardUnfilled) {
+            JobResponse jobResponse = jobPostedMapper.jobPostedDtoToJobResponse(jobPostedDto);
+            unfilled.add(jobResponse);
+        }
+
+        ArrayList<JobResponse> filled = new ArrayList<>();
+        for (JobPostedDto jobPostedDto:standardFilled) {
+            JobResponse jobResponse = jobPostedMapper.jobPostedDtoToJobResponse(jobPostedDto);
+            filled.add(jobResponse);
+        }
+
+        JobRes jobRes = new JobRes();
+        jobRes.setFilled(filled);
+        jobRes.setUnfilled(unfilled);
+
+        return jobRes;
     }
 
 

@@ -4,6 +4,7 @@ import com.example.campus_ease.management.JobFetchManagement;
 import com.example.campus_ease.management.JobPostedManagement;
 import com.example.campus_ease.mapper.JobPostedMapper;
 import com.example.campus_ease.request.JobPostedReq;
+import com.example.campus_ease.response.JobRes;
 import com.example.campus_ease.response.JobResponse;
 import com.example.campus_ease.shared.dto.JobPostedDto;
 import org.springframework.http.ResponseEntity;
@@ -34,14 +35,9 @@ public class JobPostedController {
     }
 
     @GetMapping("/jobs/{user_id}")
-    public ResponseEntity<ArrayList<JobResponse>> getJobs(@PathVariable Long user_id){
-        ArrayList<JobPostedDto> jobPostedDtos = jobFetchManagement.getJobs(user_id);
-        ArrayList<JobResponse> jobResponses = new ArrayList<>();
-        for (JobPostedDto jobPostedDto:jobPostedDtos) {
-            JobResponse jobResponse = jobPostedMapper.jobPostedDtoToJobResponse(jobPostedDto);
-            jobResponses.add(jobResponse);
-        }
-        return ResponseEntity.ok().body(jobResponses);
+    public ResponseEntity<JobRes> getJobs(@PathVariable Long user_id){
+        JobRes jobRes   = jobFetchManagement.getJobs(user_id);
+        return ResponseEntity.ok().body(jobRes);
     }
 
 

@@ -1,6 +1,7 @@
 package com.example.campus_ease.management.impl;
 
 import com.example.campus_ease.management.JobFetchManagement;
+import com.example.campus_ease.response.JobRes;
 import com.example.campus_ease.service.JobFetchService;
 import com.example.campus_ease.shared.dto.JobPostedDto;
 import jakarta.transaction.Transactional;
@@ -18,7 +19,7 @@ public class JobFetchManagementImpl implements JobFetchManagement {
     }
 
     @Override
-    public ArrayList<JobPostedDto> getJobs(Long user_id) {
+    public JobRes getJobs(Long user_id) {
         return jobFetchService.getJobs(user_id);
     }
 }
