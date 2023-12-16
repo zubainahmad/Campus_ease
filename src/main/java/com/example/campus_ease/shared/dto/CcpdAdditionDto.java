@@ -1,4 +1,4 @@
-package com.example.campus_ease.request;
+package com.example.campus_ease.shared.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,8 +9,10 @@ import lombok.Setter;
 @AllArgsConstructor
 @Getter
 @Setter
-public class JobFetchReq {
-    private Long studentId;
 
-    private Long departmentId;
+public class CcpdAdditionDto {
+
+    private Long ccpdId;
+
+    private String name;
 }
