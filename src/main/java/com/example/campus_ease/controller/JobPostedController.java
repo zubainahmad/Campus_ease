@@ -3,6 +3,7 @@ package com.example.campus_ease.controller;
 import com.example.campus_ease.management.JobFetchManagement;
 import com.example.campus_ease.management.JobPostedManagement;
 import com.example.campus_ease.mapper.JobPostedMapper;
+import com.example.campus_ease.request.JobFillReq;
 import com.example.campus_ease.request.JobPostedReq;
 import com.example.campus_ease.response.JobRes;
 import com.example.campus_ease.response.JobResponse;
@@ -38,6 +39,14 @@ public class JobPostedController {
     public ResponseEntity<JobRes> getJobs(@PathVariable Long user_id){
         JobRes jobRes   = jobFetchManagement.getJobs(user_id);
         return ResponseEntity.ok().body(jobRes);
+    }
+
+    @PostMapping("/jobs/submit")
+    public ResponseEntity<String> submitJob(@RequestBody JobFillReq jobFillReq){
+        Long userId = jobFillReq.getUserId();
+        Long jobId = jobFillReq.getJobId();
+        jobPostedManagement.jobFill(userId, jobId);
+        return ResponseEntity.ok().body("Job filled successfully");
     }
 
 

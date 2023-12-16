@@ -1,4 +1,4 @@
-package com.example.campus_ease.utils.enums;
+package com.example.campus_ease.shared.utils.enums;
 
 public enum Branch {
 

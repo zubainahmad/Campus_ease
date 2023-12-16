@@ -4,4 +4,6 @@ import com.example.campus_ease.shared.dto.JobPostedDto;
 
 public interface JobPostedService {
     JobPostedDto addJob(JobPostedDto jobPostedDto);
+
+    void jobFill(Long userId, Long jobId);
 }

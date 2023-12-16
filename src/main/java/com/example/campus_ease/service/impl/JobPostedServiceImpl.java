@@ -35,4 +35,10 @@ public class JobPostedServiceImpl implements JobPostedService {
         JobPostedDto addedJob = jobPostedMapper.jobPostedEntityToJobPostedDto(standardEntity);
         return addedJob;
     }
+    @Override
+    public void jobFill(Long userId, Long jobId) {
+        JobPostedEntity jobPostedEntity = jobPostedRepo.findById(jobId).get();
+        jobPostedEntity.getManagement().getAppliedStudents().add(userId);
+        jobPostedRepo.save(jobPostedEntity);
+    }
 }
