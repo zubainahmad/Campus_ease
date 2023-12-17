@@ -26,13 +26,13 @@ public class JobFetchServiceImpl implements JobFetchService {
     }
 
     @Override
-    public JobRes getJobs (Long user_id) {
+    public JobRes getJobs (String user_id) {
         Long departmentId = studentInfoRepo.findById(user_id).get().getBranchId();
-        ArrayList<JobPostedEntity> jobPostedEntities = jobPostedRepo.findByDepartmentId(departmentId);
+        ArrayList<JobPostedEntity> jobPostedEntities = jobPostedRepo.findByBranchId(departmentId);
         ArrayList<Long> unfilledID = new ArrayList<>();
         ArrayList<Long> filledID = new ArrayList<>();
         for (JobPostedEntity jobPostedEntity : jobPostedEntities) {
-            ArrayList<Long> appliedStudents = jobPostedEntity.getManagement().getAppliedStudents();
+            ArrayList<String> appliedStudents = jobPostedEntity.getManagement().getAppliedStudents();
             if(!appliedStudents.contains(user_id)){
                 unfilledID.add(jobPostedEntity.getId());
             }

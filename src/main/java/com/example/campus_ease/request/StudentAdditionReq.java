@@ -12,7 +12,7 @@ import lombok.Setter;
 @Setter
 public class StudentAdditionReq {
 
-    private Long userId;
+    private String userId;
 
     private String firstName;
 

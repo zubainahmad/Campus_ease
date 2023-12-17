@@ -4,4 +4,6 @@ import com.example.campus_ease.shared.dto.StudentAdditionDto;
 
 public interface StudentAdditionService {
     StudentAdditionDto addUser(StudentAdditionDto studentAdditionDto);
+
+    StudentAdditionDto updateStudent(StudentAdditionDto standardStudentAdditionDto);
 }

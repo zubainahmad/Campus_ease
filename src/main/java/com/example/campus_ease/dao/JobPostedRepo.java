@@ -6,5 +6,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.ArrayList;
 
 public interface JobPostedRepo extends JpaRepository<JobPostedEntity,Long> {
-       ArrayList<JobPostedEntity> findByDepartmentId(Long departmentId);
+       ArrayList<JobPostedEntity> findByBranchId(Long branchId);
 }

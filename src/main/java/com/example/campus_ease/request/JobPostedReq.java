@@ -28,7 +28,7 @@ public class JobPostedReq {
 
     private String endDate;
 
-    private Long departmentId;
+    private String branch;
 
     private JobManagementEntity management;
 

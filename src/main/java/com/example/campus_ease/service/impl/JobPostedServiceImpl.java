@@ -36,7 +36,7 @@ public class JobPostedServiceImpl implements JobPostedService {
         return addedJob;
     }
     @Override
-    public void jobFill(Long userId, Long jobId) {
+    public void jobFill(String userId, Long jobId) {
         JobPostedEntity jobPostedEntity = jobPostedRepo.findById(jobId).get();
         jobPostedEntity.getManagement().getAppliedStudents().add(userId);
         jobPostedRepo.save(jobPostedEntity);

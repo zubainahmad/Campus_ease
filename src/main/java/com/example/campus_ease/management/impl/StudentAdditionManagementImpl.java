@@ -22,6 +22,12 @@ public class StudentAdditionManagementImpl implements StudentAdditionManagement 
         return studentAdditionService.addUser(standardStudentAdditionDto);
     }
 
+    @Override
+    public StudentAdditionDto updateStudent(StudentAdditionDto studentAdditionDto) {
+        StudentAdditionDto standardStudentAdditionDto = getBranchId(studentAdditionDto);
+        return studentAdditionService.updateStudent(standardStudentAdditionDto);
+    }
+
     StudentAdditionDto getBranchId(StudentAdditionDto studentAdditionDto)
     {
         Long branchId;

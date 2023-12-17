@@ -19,7 +19,7 @@ public class JobFetchManagementImpl implements JobFetchManagement {
     }
 
     @Override
-    public JobRes getJobs(Long user_id) {
+    public JobRes getJobs(String user_id) {
         return jobFetchService.getJobs(user_id);
     }
 }

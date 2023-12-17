@@ -10,10 +10,7 @@ import com.example.campus_ease.request.StudentAdditionReq;
 import com.example.campus_ease.shared.dto.CcpdAdditionDto;
 import com.example.campus_ease.shared.dto.StudentAdditionDto;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 
@@ -39,6 +36,13 @@ public class UserController {
         StudentAdditionDto studentAdditionDto = studentAdditionMapper.studentReqToStudentAdditionDto(studentAdditionReq);
         StudentAdditionDto standardDto = studentAdditionManagement.addUser(studentAdditionDto);
         return ResponseEntity.ok().body("Student added successfully");
+    }
+
+    @PutMapping("/student")
+    public ResponseEntity<String> updateStudent(@RequestBody StudentAdditionReq studentAdditionReq){
+        StudentAdditionDto studentAdditionDto = studentAdditionMapper.studentReqToStudentAdditionDto(studentAdditionReq);
+        StudentAdditionDto standardDto = studentAdditionManagement.updateStudent(studentAdditionDto);
+        return ResponseEntity.ok().body("Student updated successfully");
     }
 
     @PostMapping("/ccpd")

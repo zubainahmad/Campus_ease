@@ -33,7 +33,7 @@ public class JobPostedEntity {
 
     private String file;
 
-    private Long departmentId;
+    private Long branchId;
 
     @OneToOne(targetEntity = JobManagementEntity.class, cascade = CascadeType.ALL)
     private JobManagementEntity management;

@@ -10,6 +10,6 @@ import lombok.Setter;
 @Getter
 @Setter
 public class JobFillReq {
-    private Long userId;
+    private String userId;
     private Long jobId;
 }

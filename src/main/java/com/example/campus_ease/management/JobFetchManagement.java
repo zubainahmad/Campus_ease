@@ -7,5 +7,5 @@ import java.util.ArrayList;
 
 
 public interface JobFetchManagement {
-    public JobRes getJobs(Long user_id);
+    public JobRes getJobs(String user_id);
 }

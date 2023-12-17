@@ -15,6 +15,6 @@ public class JobManagementDto {
     private Long id;
 
 
-    private ArrayList<Long> appliedStudents;
+    private ArrayList<String> appliedStudents;
 
 }

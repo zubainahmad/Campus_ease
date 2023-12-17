@@ -26,4 +26,13 @@ public class StudentAdditionServiceImpl implements StudentAdditionService {
         StudentAdditionDto returnValue = studentAdditionMapper.studentInfoEntityToStudentAdditionDto(savedEntity);
         return returnValue;
     }
+
+
+    @Override
+    public StudentAdditionDto updateStudent(StudentAdditionDto studentAdditionDto) {
+        StudentInfoEntity studentInfoEntity = studentAdditionMapper.studentAdditionDtoToStudentInfoEntity(studentAdditionDto);
+        StudentInfoEntity savedEntity = studentInfoRepo.save(studentInfoEntity);
+        StudentAdditionDto returnValue = studentAdditionMapper.studentInfoEntityToStudentAdditionDto(savedEntity);
+        return returnValue;
+    }
 }

@@ -36,14 +36,14 @@ public class JobPostedController {
     }
 
     @GetMapping("/jobs/{user_id}")
-    public ResponseEntity<JobRes> getJobs(@PathVariable Long user_id){
+    public ResponseEntity<JobRes> getJobs(@PathVariable String user_id){
         JobRes jobRes   = jobFetchManagement.getJobs(user_id);
         return ResponseEntity.ok().body(jobRes);
     }
 
     @PostMapping("/jobs/submit")
     public ResponseEntity<String> submitJob(@RequestBody JobFillReq jobFillReq){
-        Long userId = jobFillReq.getUserId();
+        String userId = jobFillReq.getUserId();
         Long jobId = jobFillReq.getJobId();
         jobPostedManagement.jobFill(userId, jobId);
         return ResponseEntity.ok().body("Job filled successfully");

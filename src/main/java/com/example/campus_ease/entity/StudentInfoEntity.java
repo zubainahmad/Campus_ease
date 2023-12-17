@@ -14,7 +14,7 @@ import lombok.Setter;
 @Setter
 public class StudentInfoEntity {
     @Id
-    private Long userId;
+    private String userId;
 
     private String firstName;
 

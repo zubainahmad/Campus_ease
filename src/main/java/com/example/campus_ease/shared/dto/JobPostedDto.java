@@ -29,7 +29,9 @@ public class JobPostedDto {
 
     private String endDate;
 
-    private Long departmentId;
+    private Long branchId;
+
+    private String branch;
 
     private JobManagementDto management;
 
