@@ -4,13 +4,14 @@ import com.example.campus_ease.management.CcpdAdditionManagement;
 import com.example.campus_ease.management.StudentAdditionManagement;
 import com.example.campus_ease.mapper.CcpdAdditionMapper;
 import com.example.campus_ease.mapper.StudentAdditionMapper;
-import com.example.campus_ease.mapper.StudentAdditionMapperImpl;
 import com.example.campus_ease.request.CcpdAdditionReq;
 import com.example.campus_ease.request.StudentAdditionReq;
 import com.example.campus_ease.shared.dto.CcpdAdditionDto;
 import com.example.campus_ease.shared.dto.StudentAdditionDto;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Objects;
 
 @RestController
 
@@ -34,21 +35,30 @@ public class UserController {
     @PostMapping("/student")
     public ResponseEntity<String> addStudent(@RequestBody StudentAdditionReq studentAdditionReq){
         StudentAdditionDto studentAdditionDto = studentAdditionMapper.studentReqToStudentAdditionDto(studentAdditionReq);
-        StudentAdditionDto standardDto = studentAdditionManagement.addUser(studentAdditionDto);
-        return ResponseEntity.ok().body("Student added successfully");
+        StudentAdditionDto standardDto = studentAdditionManagement.addStudent(studentAdditionDto);
+        return ResponseEntity.ok().body("User added successfully");
     }
 
     @PutMapping("/student")
     public ResponseEntity<String> updateStudent(@RequestBody StudentAdditionReq studentAdditionReq){
         StudentAdditionDto studentAdditionDto = studentAdditionMapper.studentReqToStudentAdditionDto(studentAdditionReq);
         StudentAdditionDto standardDto = studentAdditionManagement.updateStudent(studentAdditionDto);
-        return ResponseEntity.ok().body("Student updated successfully");
+        return ResponseEntity.ok().body("User updated successfully");
     }
 
     @PostMapping("/ccpd")
     public ResponseEntity<String> addCcpd(@RequestBody CcpdAdditionReq ccpdAdditionReq){
         CcpdAdditionDto ccpdAdditionDto = ccpdAdditionMapper.ccpdAdditionReqToCcpdAdditionDto(ccpdAdditionReq);
         CcpdAdditionDto standardDto = ccpdAdditionManagement.addCcpd(ccpdAdditionDto);
-        return ResponseEntity.ok().body("CCPD person added successfully");
+        return ResponseEntity.ok().body("User added successfully");
+    }
+
+    @GetMapping("/student/{userID}")
+    public ResponseEntity<String> getStudent(@PathVariable String userID){
+        StudentAdditionDto studentAdditionDto = studentAdditionManagement.getStudent(userID);
+        if(Objects.nonNull(studentAdditionDto))
+            return ResponseEntity.ok().body("User exists");
+        else
+            return ResponseEntity.ok().body("User does not exist");
     }
 }

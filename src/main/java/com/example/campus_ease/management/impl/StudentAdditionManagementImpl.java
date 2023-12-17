@@ -16,16 +16,21 @@ public class StudentAdditionManagementImpl implements StudentAdditionManagement 
     }
 
     @Override
-    public StudentAdditionDto addUser(StudentAdditionDto studentAdditionDto) {
+    public StudentAdditionDto addStudent(StudentAdditionDto studentAdditionDto) {
 
         StudentAdditionDto standardStudentAdditionDto = getBranchId(studentAdditionDto);
-        return studentAdditionService.addUser(standardStudentAdditionDto);
+        return studentAdditionService.addStudent(standardStudentAdditionDto);
     }
 
     @Override
     public StudentAdditionDto updateStudent(StudentAdditionDto studentAdditionDto) {
         StudentAdditionDto standardStudentAdditionDto = getBranchId(studentAdditionDto);
         return studentAdditionService.updateStudent(standardStudentAdditionDto);
+    }
+
+    @Override
+    public StudentAdditionDto getStudent(String userID) {
+        return studentAdditionService.getStudent(userID);
     }
 
     StudentAdditionDto getBranchId(StudentAdditionDto studentAdditionDto)

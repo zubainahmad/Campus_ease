@@ -20,7 +20,7 @@ public class StudentAdditionServiceImpl implements StudentAdditionService {
     }
 
     @Override
-    public StudentAdditionDto addUser(StudentAdditionDto studentAdditionDto) {
+    public StudentAdditionDto addStudent(StudentAdditionDto studentAdditionDto) {
         StudentInfoEntity studentInfoEntity = studentAdditionMapper.studentAdditionDtoToStudentInfoEntity(studentAdditionDto);
         StudentInfoEntity savedEntity = studentInfoRepo.save(studentInfoEntity);
         StudentAdditionDto returnValue = studentAdditionMapper.studentInfoEntityToStudentAdditionDto(savedEntity);
@@ -33,6 +33,13 @@ public class StudentAdditionServiceImpl implements StudentAdditionService {
         StudentInfoEntity studentInfoEntity = studentAdditionMapper.studentAdditionDtoToStudentInfoEntity(studentAdditionDto);
         StudentInfoEntity savedEntity = studentInfoRepo.save(studentInfoEntity);
         StudentAdditionDto returnValue = studentAdditionMapper.studentInfoEntityToStudentAdditionDto(savedEntity);
+        return returnValue;
+    }
+
+    @Override
+    public StudentAdditionDto getStudent(String userID) {
+        StudentInfoEntity studentInfoEntity = studentInfoRepo.findById(userID).orElse(null);
+        StudentAdditionDto returnValue = studentAdditionMapper.studentInfoEntityToStudentAdditionDto(studentInfoEntity);
         return returnValue;
     }
 }

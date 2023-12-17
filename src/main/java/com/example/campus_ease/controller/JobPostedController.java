@@ -46,7 +46,7 @@ public class JobPostedController {
         String userId = jobFillReq.getUserId();
         Long jobId = jobFillReq.getJobId();
         jobPostedManagement.jobFill(userId, jobId);
-        return ResponseEntity.ok().body("Job filled successfully");
+        return ResponseEntity.ok().body("Job submitted successfully");
     }
 
 
