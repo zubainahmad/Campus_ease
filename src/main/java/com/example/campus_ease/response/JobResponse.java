@@ -26,5 +26,5 @@ public class JobResponse {
 
     private String endDate;
 
-    private Long departmentId;
+    private String branch;
 }

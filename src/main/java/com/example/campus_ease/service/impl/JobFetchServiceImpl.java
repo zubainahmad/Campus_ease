@@ -8,6 +8,7 @@ import com.example.campus_ease.response.JobRes;
 import com.example.campus_ease.response.JobResponse;
 import com.example.campus_ease.service.JobFetchService;
 import com.example.campus_ease.shared.dto.JobPostedDto;
+import com.example.campus_ease.shared.utils.enums.Branch;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -56,12 +57,16 @@ public class JobFetchServiceImpl implements JobFetchService {
         ArrayList<JobResponse> unfilled = new ArrayList<>();
         for (JobPostedDto jobPostedDto:standardUnfilled) {
             JobResponse jobResponse = jobPostedMapper.jobPostedDtoToJobResponse(jobPostedDto);
+            jobPostedDto.setBranch(getBranchName(jobPostedDto));
+            jobResponse.setBranch(jobPostedDto.getBranch());
             unfilled.add(jobResponse);
         }
 
         ArrayList<JobResponse> filled = new ArrayList<>();
         for (JobPostedDto jobPostedDto:standardFilled) {
             JobResponse jobResponse = jobPostedMapper.jobPostedDtoToJobResponse(jobPostedDto);
+            jobPostedDto.setBranch(getBranchName(jobPostedDto));
+            jobResponse.setBranch(jobPostedDto.getBranch());
             filled.add(jobResponse);
         }
 
@@ -70,6 +75,26 @@ public class JobFetchServiceImpl implements JobFetchService {
         jobRes.setUnfilled(unfilled);
 
         return jobRes;
+    }
+
+    String  getBranchName(JobPostedDto jobPostedDto)
+    {
+        String name;
+       if(jobPostedDto.getBranchId().equals(Branch.CS.getBranchId()))
+           name = "CS";
+         else if(jobPostedDto.getBranchId() .equals(Branch.IT.getBranchId()))
+             name = "IT";
+         else if(jobPostedDto.getBranchId().equals(Branch.EE.getBranchId()))
+             name = "EE";
+         else if (jobPostedDto.getBranchId().equals(Branch.EC.getBranchId()))
+             name = "EC";
+         else if(jobPostedDto.getBranchId().equals(Branch.ME.getBranchId()))
+             name = "ME";
+         else if(jobPostedDto.getBranchId().equals(Branch.CE.getBranchId()))
+             name = "CE";
+         else
+             name = null;
+         return name;
     }
 
 
