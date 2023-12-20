@@ -1,5 +1,5 @@
 # Campus_ease
-Api for college project 
+End Points:
 </br>
 </br>
 ## Post a Job
