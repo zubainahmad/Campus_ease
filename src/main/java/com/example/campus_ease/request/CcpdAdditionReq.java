@@ -11,7 +11,7 @@ import lombok.Setter;
 @Setter
 public class CcpdAdditionReq {
 
-    private String ccpdId;
+    private String userId;
 
     private String firstName;
 

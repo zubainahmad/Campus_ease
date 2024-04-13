@@ -14,7 +14,7 @@ import lombok.Setter;
 @Setter
 public class CcpdInfoEntity {
     @Id
-    private String ccpdId;
+    private String userId;
 
     private String firstName;
 
