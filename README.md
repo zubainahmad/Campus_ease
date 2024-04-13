@@ -80,6 +80,23 @@ curl --location 'https://campus-ease.onrender.com/jobs/submit' \
 
 ```
 
+## Add ccpd
+
+</br>
+
+```
+curl --location 'https://campus-ease.onrender.com/ccpd' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "firstName":"Sanjeeev",
+    "ccpdId":"hjsdhkfdssssssfsdfess",
+    "lastName":"Bro",
+    "email":"naughtybro@abes.ac.in"
+}'
+
+```
+
+
 
 
 
