@@ -1,5 +1,6 @@
 package com.example.campus_ease.controller;
 
+import com.example.campus_ease.application.JobPostedApplication;
 import com.example.campus_ease.management.JobFetchManagement;
 import com.example.campus_ease.management.JobPostedManagement;
 import com.example.campus_ease.mapper.JobPostedMapper;
@@ -18,20 +19,20 @@ import java.util.ArrayList;
 public class JobPostedController {
     private JobPostedMapper jobPostedMapper;
 
-    private JobPostedManagement jobPostedManagement;
+    private JobPostedApplication jobPostedApplication;
 
     private JobFetchManagement jobFetchManagement;
 
-    public JobPostedController(JobPostedMapper jobPostedMapper, JobPostedManagement jobPostedManagement, JobFetchManagement jobFetchManagement) {
+    public JobPostedController(JobPostedMapper jobPostedMapper, JobPostedApplication jobPostedApplication, JobFetchManagement jobFetchManagement) {
         this.jobPostedMapper = jobPostedMapper;
-        this.jobPostedManagement = jobPostedManagement;
+        this.jobPostedApplication = jobPostedApplication;
         this.jobFetchManagement = jobFetchManagement;
     }
 
     @PostMapping("/jobs")
     public ResponseEntity<String> addJob(@RequestBody JobPostedReq jobPostedReq){
         JobPostedDto jobPostedDto = jobPostedMapper.jobPostedRequestToJobPostedDto(jobPostedReq);
-        JobPostedDto addedJob = jobPostedManagement.addJob(jobPostedDto);
+        JobPostedDto addedJob = jobPostedApplication.addJob(jobPostedDto);
         return ResponseEntity.ok().body("Job added successfully");
     }
 
@@ -45,7 +46,7 @@ public class JobPostedController {
     public ResponseEntity<String> submitJob(@RequestBody JobFillReq jobFillReq){
         String userId = jobFillReq.getUserId();
         Long jobId = jobFillReq.getJobId();
-        jobPostedManagement.jobFill(userId, jobId);
+        jobPostedApplication.jobFill(userId, jobId);
         return ResponseEntity.ok().body("Job submitted successfully");
     }
 

@@ -12,7 +12,11 @@ import lombok.Setter;
 
 public class CcpdAdditionDto {
 
-    private Long ccpdId;
+    private String ccpdId;
 
-    private String name;
+    private String firstName;
+
+    private String lastName;
+
+    private String email;
 }
