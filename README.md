@@ -89,7 +89,7 @@ curl --location 'https://campus-ease.onrender.com/ccpd' \
 --header 'Content-Type: application/json' \
 --data-raw '{
     "firstName":"Sanjeeev",
-    "ccpdId":"hjsdhkfdssssssfsdfess",
+    "userId":"hjsdhkfdssssssfsdfess",
     "lastName":"Bro",
     "email":"naughtybro@abes.ac.in"
 }'
