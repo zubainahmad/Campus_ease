@@ -35,5 +35,7 @@ public class JobPostedDto {
 
     private JobManagementDto management;
 
+    private String minimumPercentage;
+
 
 }

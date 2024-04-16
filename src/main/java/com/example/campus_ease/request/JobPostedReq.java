@@ -32,4 +32,6 @@ public class JobPostedReq {
 
     private JobManagementEntity management;
 
+    private String minimumPercentage;
+
 }

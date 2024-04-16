@@ -38,4 +38,6 @@ public class JobPostedEntity {
     @OneToOne(targetEntity = JobManagementEntity.class, cascade = CascadeType.ALL)
     private JobManagementEntity management;
 
+    private String minimumPercentage;
+
 }
