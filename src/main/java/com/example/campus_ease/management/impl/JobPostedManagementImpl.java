@@ -11,6 +11,8 @@ import jakarta.transaction.Transactional;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
+
 @Transactional
 @Component
 public class JobPostedManagementImpl implements JobPostedManagement {
@@ -21,9 +23,16 @@ public class JobPostedManagementImpl implements JobPostedManagement {
     }
 
     @Override
-    public JobPostedDto addJob(JobPostedDto jobPostedDto) {
-        JobPostedDto standardJobPostedDto = getBranchId(jobPostedDto);
-        return jobPostedService.addJob(standardJobPostedDto);
+    public ArrayList<JobPostedDto> addJob(JobPostedDto jobPostedDto) {
+        ArrayList<JobPostedDto> standardJobPostedDto = new ArrayList<>();
+        ArrayList<String> branches = jobPostedDto.getBranch();
+        for (String branch:branches) {
+            Long branchId = getBranchId(branch);
+            jobPostedDto.setBranchId(branchId);
+            JobPostedDto standardDto = jobPostedService.addJob(jobPostedDto);
+            standardJobPostedDto.add(standardDto);
+        }
+        return standardJobPostedDto;
     }
 
     @Override
@@ -31,24 +40,24 @@ public class JobPostedManagementImpl implements JobPostedManagement {
         jobPostedService.jobFill(userId, jobId);
     }
 
-    JobPostedDto getBranchId(JobPostedDto jobPostedDto)
+    Long getBranchId(String branch)
     {
         Long branchId;
-        if(jobPostedDto.getBranch().equals("CS"))
+        if(branch.equals("CS"))
             branchId = Branch.CS.getBranchId();
-        else if(jobPostedDto.getBranch().equals("IT"))
+        else if(branch.equals("IT"))
             branchId = Branch.IT.getBranchId();
-        else if(jobPostedDto.getBranch().equals("EE"))
+        else if(branch.equals("EE"))
             branchId = Branch.EE.getBranchId();
-        else if(jobPostedDto.getBranch().equals("EC"))
+        else if(branch.equals("EC"))
             branchId = Branch.EC.getBranchId();
-        else if(jobPostedDto.getBranch().equals("ME"))
+        else if(branch.equals("ME"))
             branchId = Branch.ME.getBranchId();
-        else if(jobPostedDto.getBranch().equals("CE"))
+        else if(branch.equals("CE"))
             branchId = Branch.CE.getBranchId();
         else
             branchId = null;
-        jobPostedDto.setBranchId(branchId);
-        return jobPostedDto;
+
+        return branchId;
     }
 }

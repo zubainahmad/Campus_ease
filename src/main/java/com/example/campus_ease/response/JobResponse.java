@@ -26,5 +26,5 @@ public class JobResponse {
 
     private String endDate;
 
-    private String branch;
+    private String branches;
 }

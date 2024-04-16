@@ -32,7 +32,7 @@ public class JobPostedController {
     @PostMapping("/jobs")
     public ResponseEntity<String> addJob(@RequestBody JobPostedReq jobPostedReq){
         JobPostedDto jobPostedDto = jobPostedMapper.jobPostedRequestToJobPostedDto(jobPostedReq);
-        JobPostedDto addedJob = jobPostedApplication.addJob(jobPostedDto);
+        jobPostedApplication.addJob(jobPostedDto);
         return ResponseEntity.ok().body("Job added successfully");
     }
 

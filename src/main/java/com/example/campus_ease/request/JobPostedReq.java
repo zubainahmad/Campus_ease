@@ -6,11 +6,15 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.ArrayList;
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
 public class JobPostedReq {
+
+    private String userId;
 
     private String companyName;
 
@@ -28,10 +32,14 @@ public class JobPostedReq {
 
     private String endDate;
 
-    private String branch;
+    private ArrayList<String> branch;
 
     private JobManagementEntity management;
 
     private String minimumPercentage;
+
+    private String websiteUrl;
+
+    private String jobLocation;
 
 }

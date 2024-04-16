@@ -5,6 +5,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.util.ArrayList;
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
@@ -12,6 +15,8 @@ import org.springframework.web.multipart.MultipartFile;
 public class JobPostedDto {
 
     private Long id;
+
+    private String userId;
 
     private String companyName;
 
@@ -31,11 +36,15 @@ public class JobPostedDto {
 
     private Long branchId;
 
-    private String branch;
+    private ArrayList<String> branch;
 
     private JobManagementDto management;
 
     private String minimumPercentage;
+
+    private String websiteUrl;
+
+    private String jobLocation;
 
 
 }

@@ -7,6 +7,7 @@ import com.example.campus_ease.service.NotififcationService;
 import com.example.campus_ease.shared.dto.JobPostedDto;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.Objects;
 
 @Component
@@ -26,12 +27,13 @@ public class JobPostedApplicationImpl implements JobPostedApplication {
     }
 
     @Override
-    public JobPostedDto addJob(JobPostedDto jobPostedDto) {
-        JobPostedDto standardJobPostedDto = jobPostedManagement.addJob(jobPostedDto);
-        if(Objects.nonNull(jobPostedRepo.getById(standardJobPostedDto.getId())))
-            notififcationService.sendNotification(standardJobPostedDto);
-        return standardJobPostedDto;
-
+    public String addJob(JobPostedDto jobPostedDto) {
+        ArrayList<JobPostedDto> standardJobPostedDto = jobPostedManagement.addJob(jobPostedDto);
+        for (JobPostedDto standardDto : standardJobPostedDto) {
+            if (Objects.nonNull(jobPostedRepo.getById(standardDto.getId())))
+                notififcationService.sendNotification(standardDto);
+        }
+        return "Job Posted Successfully";
     }
 
 

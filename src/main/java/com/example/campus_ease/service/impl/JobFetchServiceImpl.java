@@ -57,16 +57,14 @@ public class JobFetchServiceImpl implements JobFetchService {
         ArrayList<JobResponse> unfilled = new ArrayList<>();
         for (JobPostedDto jobPostedDto:standardUnfilled) {
             JobResponse jobResponse = jobPostedMapper.jobPostedDtoToJobResponse(jobPostedDto);
-            jobPostedDto.setBranch(getBranchName(jobPostedDto));
-            jobResponse.setBranch(jobPostedDto.getBranch());
+            jobResponse.setBranches(getBranchName(jobPostedDto));
             unfilled.add(jobResponse);
         }
 
         ArrayList<JobResponse> filled = new ArrayList<>();
         for (JobPostedDto jobPostedDto:standardFilled) {
             JobResponse jobResponse = jobPostedMapper.jobPostedDtoToJobResponse(jobPostedDto);
-            jobPostedDto.setBranch(getBranchName(jobPostedDto));
-            jobResponse.setBranch(jobPostedDto.getBranch());
+            jobResponse.setBranches(getBranchName(jobPostedDto));
             filled.add(jobResponse);
         }
 

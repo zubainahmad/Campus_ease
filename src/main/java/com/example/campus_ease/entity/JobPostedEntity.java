@@ -17,6 +17,8 @@ public class JobPostedEntity {
     @GeneratedValue
     private Long id;
 
+    private String userId;
+
     private String companyName;
 
     private String jobDescription;
@@ -39,5 +41,9 @@ public class JobPostedEntity {
     private JobManagementEntity management;
 
     private String minimumPercentage;
+
+    private String websiteUrl;
+
+    private String jobLocation;
 
 }

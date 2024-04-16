@@ -6,7 +6,7 @@ import jakarta.transaction.Transactional;
 
 public interface JobPostedApplication {
 
-    JobPostedDto addJob(JobPostedDto jobPostedDto);
+    String addJob(JobPostedDto jobPostedDto);
 
     void jobFill(String userId, Long jobId);
 }
