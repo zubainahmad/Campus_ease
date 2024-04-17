@@ -7,7 +7,7 @@ End Points:
 curl --location 'https://campus-ease.onrender.com/jobs' \
 --header 'Content-Type: application/json' \
 --data '{
-    "companyName" : "ABC",
+    "companyName" : "Autoscale",
     "jobDescription" : "This job is for software development",
     "jobProfile" : "SDE",
     "expCTC" : "500000",
@@ -15,7 +15,12 @@ curl --location 'https://campus-ease.onrender.com/jobs' \
     "startDate" : "31/07/2023",
     "endDate" : "31/12/2023",
     "file" : "https://ajflka.com",
-    "branch" : "EE"
+    "branch" : ["EE","CS","IT"],
+    "minimumPercentage" : "100",
+    "userId":"gssgsdgsgr",
+    "websiteUrl": "https://ajdk.com/page",
+    "jobLocation" : "Noida"
+
 }'
 ```
 ## Add a student
