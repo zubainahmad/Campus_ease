@@ -29,6 +29,12 @@ public class JobPostedController {
         this.jobFetchManagement = jobFetchManagement;
     }
 
+
+    @GetMapping("/ping")
+    public ResponseEntity<String> ping(){
+        return ResponseEntity.ok().body("pong");
+    }
+
     @PostMapping("/jobs")
     public ResponseEntity<String> addJob(@RequestBody JobPostedReq jobPostedReq){
         JobPostedDto jobPostedDto = jobPostedMapper.jobPostedRequestToJobPostedDto(jobPostedReq);
