@@ -82,14 +82,20 @@ public class JobFetchServiceImpl implements JobFetchService {
            name = "CS";
          else if(jobPostedDto.getBranchId() .equals(Branch.IT.getBranchId()))
              name = "IT";
-         else if(jobPostedDto.getBranchId().equals(Branch.EE.getBranchId()))
-             name = "EE";
-         else if (jobPostedDto.getBranchId().equals(Branch.EC.getBranchId()))
-             name = "EC";
+         else if(jobPostedDto.getBranchId().equals(Branch.EN.getBranchId()))
+             name = "EN";
+         else if (jobPostedDto.getBranchId().equals(Branch.ECE.getBranchId()))
+             name = "ECE";
          else if(jobPostedDto.getBranchId().equals(Branch.ME.getBranchId()))
              name = "ME";
          else if(jobPostedDto.getBranchId().equals(Branch.CE.getBranchId()))
              name = "CE";
+         else if(jobPostedDto.getBranchId().equals(Branch.CSE.getBranchId()))
+                name = "CSE";
+            else if(jobPostedDto.getBranchId().equals(Branch.CSE_AIML.getBranchId()))
+                name = "CSE-AIML";
+            else if(jobPostedDto.getBranchId().equals(Branch.CSE_DS.getBranchId()))
+                name = "CSE-DS";
          else
              name = null;
          return name;

@@ -40,14 +40,20 @@ public class StudentAdditionManagementImpl implements StudentAdditionManagement 
             branchId = Branch.CS.getBranchId();
         else if(studentAdditionDto.getBranch().equals("IT"))
             branchId = Branch.IT.getBranchId();
-        else if(studentAdditionDto.getBranch().equals("EE"))
-            branchId = Branch.EE.getBranchId();
-        else if(studentAdditionDto.getBranch().equals("EC"))
-            branchId = Branch.EC.getBranchId();
+        else if(studentAdditionDto.getBranch().equals("EN"))
+            branchId = Branch.EN.getBranchId();
+        else if(studentAdditionDto.getBranch().equals("ECE"))
+            branchId = Branch.ECE.getBranchId();
         else if(studentAdditionDto.getBranch().equals("ME"))
             branchId = Branch.ME.getBranchId();
         else if(studentAdditionDto.getBranch().equals("CE"))
             branchId = Branch.CE.getBranchId();
+        else if (studentAdditionDto.getBranch().equals("CSE"))
+            branchId = Branch.CSE.getBranchId();
+        else if(studentAdditionDto.getBranch().equals("CSE-AIML"))
+            branchId = Branch.CSE_AIML.getBranchId();
+        else if(studentAdditionDto.getBranch().equals("CSE-DS"))
+            branchId = Branch.CSE_DS.getBranchId();
         else
             branchId = null;
         studentAdditionDto.setBranchId(branchId);

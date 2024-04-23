@@ -47,14 +47,20 @@ public class JobPostedManagementImpl implements JobPostedManagement {
             branchId = Branch.CS.getBranchId();
         else if(branch.equals("IT"))
             branchId = Branch.IT.getBranchId();
-        else if(branch.equals("EE"))
-            branchId = Branch.EE.getBranchId();
-        else if(branch.equals("EC"))
-            branchId = Branch.EC.getBranchId();
+        else if(branch.equals("EN"))
+            branchId = Branch.EN.getBranchId();
+        else if(branch.equals("ECE"))
+            branchId = Branch.ECE.getBranchId();
         else if(branch.equals("ME"))
             branchId = Branch.ME.getBranchId();
         else if(branch.equals("CE"))
             branchId = Branch.CE.getBranchId();
+        else if (branch.equals("CSE"))
+            branchId = Branch.CSE.getBranchId();
+        else if(branch.equals("CSE-AIML"))
+            branchId = Branch.CSE_AIML.getBranchId();
+        else if(branch.equals("CSE-DS"))
+            branchId = Branch.CSE_DS.getBranchId();
         else
             branchId = null;
 
