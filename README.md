@@ -101,7 +101,15 @@ curl --location 'https://campus-ease.onrender.com/ccpd' \
 
 ```
 
+## Ping
 
+</br>
+
+```
+
+curl --location 'https://campus-ease.onrender.com/ping'
+
+```
 
 
 
