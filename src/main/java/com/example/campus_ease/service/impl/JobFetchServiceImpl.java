@@ -6,12 +6,22 @@ import com.example.campus_ease.entity.JobPostedEntity;
 import com.example.campus_ease.mapper.JobPostedMapper;
 import com.example.campus_ease.response.JobRes;
 import com.example.campus_ease.response.JobResponse;
+import com.example.campus_ease.response.JobsCcpdRes;
 import com.example.campus_ease.service.JobFetchService;
 import com.example.campus_ease.shared.dto.JobPostedDto;
 import com.example.campus_ease.shared.utils.enums.Branch;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonDeserializer;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
+import jakarta.persistence.EntityManager;
+import org.hibernate.query.NativeQuery;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.List;
+
 @Service
 public class JobFetchServiceImpl implements JobFetchService {
     private JobPostedRepo jobPostedRepo;
@@ -20,10 +30,13 @@ public class JobFetchServiceImpl implements JobFetchService {
 
    private StudentInfoRepo studentInfoRepo;
 
-    public JobFetchServiceImpl(JobPostedRepo jobPostedRepo, JobPostedMapper jobPostedMapper, StudentInfoRepo studentInfoRepo) {
+   private EntityManager entityManager;
+
+    public JobFetchServiceImpl(JobPostedRepo jobPostedRepo, JobPostedMapper jobPostedMapper, StudentInfoRepo studentInfoRepo, EntityManager entityManager) {
         this.jobPostedRepo = jobPostedRepo;
         this.jobPostedMapper = jobPostedMapper;
         this.studentInfoRepo = studentInfoRepo;
+        this.entityManager = entityManager;
     }
 
     @Override
@@ -74,6 +87,46 @@ public class JobFetchServiceImpl implements JobFetchService {
 
         return jobRes;
     }
+
+    @Override
+    public List<JobsCcpdRes> getCcpdJobs() {
+
+        String query = "WITH pika1 AS(\n" +
+                "SELECT company_name, COUNT(unnested_students) AS registered_candidates\n" +
+                "FROM \"public\".job_posted_entity AS jp\n" +
+                "JOIN \"public\".job_management_entity AS jm ON jp.management_id = jm.id\n" +
+                "LEFT JOIN (SELECT id,unnested_students FROM \"public\".job_management_entity,unnest(applied_students) AS unnested_students\n" +
+                ") AS p ON p.id = jm.id\n" +
+                "GROUP BY company_name\n" +
+                "),\n" +
+                "pika2 AS(\n" +
+                "SELECT company_name,  COUNT(first_name) AS total_candidates FROM \"public\".job_posted_entity AS jp\n" +
+                "LEFT JOIN \"public\".student_info_entity  AS se ON jp.branch_id = se.branch_id\n" +
+                "GROUP BY company_name \n" +
+                "),\n" +
+                "pika3 AS(\n" +
+                "\tSELECT company_name, end_date FROM \"public\".job_posted_entity GROUP BY (company_name,end_date)\n" +
+                ")\n" +
+                "SELECT JSON_BUILD_OBJECT('companyName',pika1.company_name,'registered', registered_candidates, 'pending', total_candidates-registered_candidates,'driveDate',end_date )AS jobs_json FROM pika1 JOIN pika2 ON pika1.company_name\n" +
+                "= pika2.company_name JOIN pika3 ON pika3.company_name = pika1.company_name\n" +
+                "\n";
+        NativeQuery nativeQuery =  entityManager.createNativeQuery(query).unwrap(org.hibernate.query.NativeQuery.class);
+        List<Object> resultList = nativeQuery.getResultList();
+
+        List<JobsCcpdRes> result = new ArrayList<>();
+        for (Object o : resultList) {
+            ObjectMapper objectMapper = new ObjectMapper();
+            try {
+               JobsCcpdRes jobsCcpdRes = objectMapper.readValue(o.toString(), JobsCcpdRes.class);
+                result.add(jobsCcpdRes);
+            } catch (JsonProcessingException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        return result;
+    }
+
+
 
     String  getBranchName(JobPostedDto jobPostedDto)
     {

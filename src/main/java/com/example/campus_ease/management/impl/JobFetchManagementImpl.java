@@ -2,12 +2,12 @@ package com.example.campus_ease.management.impl;
 
 import com.example.campus_ease.management.JobFetchManagement;
 import com.example.campus_ease.response.JobRes;
+import com.example.campus_ease.response.JobsCcpdRes;
 import com.example.campus_ease.service.JobFetchService;
-import com.example.campus_ease.shared.dto.JobPostedDto;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
+import java.util.List;
 
 @Transactional
 @Component
@@ -21,5 +21,10 @@ public class JobFetchManagementImpl implements JobFetchManagement {
     @Override
     public JobRes getJobs(String user_id) {
         return jobFetchService.getJobs(user_id);
+    }
+
+    @Override
+    public List<JobsCcpdRes> getCcpdJobs() {
+        return jobFetchService.getCcpdJobs();
     }
 }

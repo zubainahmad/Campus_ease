@@ -2,17 +2,16 @@ package com.example.campus_ease.controller;
 
 import com.example.campus_ease.application.JobPostedApplication;
 import com.example.campus_ease.management.JobFetchManagement;
-import com.example.campus_ease.management.JobPostedManagement;
 import com.example.campus_ease.mapper.JobPostedMapper;
 import com.example.campus_ease.request.JobFillReq;
 import com.example.campus_ease.request.JobPostedReq;
 import com.example.campus_ease.response.JobRes;
-import com.example.campus_ease.response.JobResponse;
+import com.example.campus_ease.response.JobsCcpdRes;
 import com.example.campus_ease.shared.dto.JobPostedDto;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 
@@ -54,6 +53,12 @@ public class JobPostedController {
         Long jobId = jobFillReq.getJobId();
         jobPostedApplication.jobFill(userId, jobId);
         return ResponseEntity.ok().body("Job submitted successfully");
+    }
+
+
+    @GetMapping("/jobs")
+    public ResponseEntity<List<JobsCcpdRes>> getJobs(){
+        return ResponseEntity.ok().body(jobFetchManagement.getCcpdJobs());
     }
 
 
