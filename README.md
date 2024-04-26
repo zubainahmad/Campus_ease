@@ -28,7 +28,7 @@ curl --location 'https://campus-ease.onrender.com/jobs' \
 curl --location 'https://campus-ease.onrender.com/student' \
 --header 'Content-Type: application/json' \
 --data-raw '{
-    "userId" : fkjsnfkljanjfknd,
+    "userId" : "fkjsnfkljanjfknd",
     "firstName" : "ABC",
     "lastName" : "XYZ",
     "rollNumber" : "20039473974983",
@@ -110,6 +110,18 @@ curl --location 'https://campus-ease.onrender.com/ccpd' \
 curl --location 'https://campus-ease.onrender.com/ping'
 
 ```
+
+
+## GET all jobs ccpd application
+
+</br>
+
+
+```
+curl --location 'https://campus-ease.onrender.com/jobs'
+
+```
+
 
 
 
