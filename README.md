@@ -112,5 +112,17 @@ curl --location 'https://campus-ease.onrender.com/ping'
 ```
 
 
+## GET all jobs ccpd application
+
+</br>
+
+
+```
+curl --location 'https://campus-ease.onrender.com/jobs'
+
+```
+
+
+
 
 
