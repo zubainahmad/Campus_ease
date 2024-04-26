@@ -7,6 +7,7 @@ import com.example.campus_ease.request.JobFillReq;
 import com.example.campus_ease.request.JobPostedReq;
 import com.example.campus_ease.response.JobRes;
 import com.example.campus_ease.response.JobsCcpdRes;
+import com.example.campus_ease.response.JobsDataRes;
 import com.example.campus_ease.shared.dto.JobPostedDto;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -60,6 +61,15 @@ public class JobPostedController {
     public ResponseEntity<List<JobsCcpdRes>> getJobs(){
         return ResponseEntity.ok().body(jobFetchManagement.getCcpdJobs());
     }
+
+
+    @GetMapping("/jobs/data")
+    public ResponseEntity<JobsDataRes> getJobsData(){
+        return ResponseEntity.ok().body(jobFetchManagement.getJobsData());
+    }
+
+
+
 
 
 }

@@ -3,6 +3,7 @@ package com.example.campus_ease.management.impl;
 import com.example.campus_ease.management.JobFetchManagement;
 import com.example.campus_ease.response.JobRes;
 import com.example.campus_ease.response.JobsCcpdRes;
+import com.example.campus_ease.response.JobsDataRes;
 import com.example.campus_ease.service.JobFetchService;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Component;
@@ -26,5 +27,10 @@ public class JobFetchManagementImpl implements JobFetchManagement {
     @Override
     public List<JobsCcpdRes> getCcpdJobs() {
         return jobFetchService.getCcpdJobs();
+    }
+
+    @Override
+    public JobsDataRes getJobsData() {
+        return jobFetchService.getJobsData();
     }
 }

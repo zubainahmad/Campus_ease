@@ -10,6 +10,9 @@ import lombok.Setter;
 @Getter
 @Setter
 public class JobResponse {
+
+    private Long id;
+
     private String companyName;
 
     private String jobDescription;

@@ -4,16 +4,20 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
 public class JobsCcpdRes {
 
+    private ArrayList<Long> id;
+
     private String companyName;
 
-    private String registered;
+    private Integer registered;
 
-    private String pending;
+    private Integer pending;
 
     private String driveDate;
 }

@@ -18,4 +18,7 @@ public class JobManagementEntity {
     private Long id;
 
     private ArrayList<String> appliedStudents;
+
+    private ArrayList<String> placedStudents;
+
 }

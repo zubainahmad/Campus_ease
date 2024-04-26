@@ -7,6 +7,7 @@ import com.example.campus_ease.mapper.JobPostedMapper;
 import com.example.campus_ease.response.JobRes;
 import com.example.campus_ease.response.JobResponse;
 import com.example.campus_ease.response.JobsCcpdRes;
+import com.example.campus_ease.response.JobsDataRes;
 import com.example.campus_ease.service.JobFetchService;
 import com.example.campus_ease.shared.dto.JobPostedDto;
 import com.example.campus_ease.shared.utils.enums.Branch;
@@ -106,9 +107,13 @@ public class JobFetchServiceImpl implements JobFetchService {
                 "),\n" +
                 "pika3 AS(\n" +
                 "\tSELECT company_name, end_date FROM \"public\".job_posted_entity GROUP BY (company_name,end_date)\n" +
+                "),\n" +
+                "pika4 AS(\n" +
+                "SELECT company_name, ARRAY_AGG(id) AS ids FROM \"public\".job_posted_entity GROUP BY company_name\n" +
                 ")\n" +
-                "SELECT JSON_BUILD_OBJECT('companyName',pika1.company_name,'registered', registered_candidates, 'pending', total_candidates-registered_candidates,'driveDate',end_date )AS jobs_json FROM pika1 JOIN pika2 ON pika1.company_name\n" +
-                "= pika2.company_name JOIN pika3 ON pika3.company_name = pika1.company_name\n" +
+                "SELECT JSON_BUILD_OBJECT('id',pika4.ids,'companyName',pika1.company_name,'registered', registered_candidates, 'pending', total_candidates-registered_candidates,'driveDate',end_date )AS jobs_json FROM pika1 JOIN pika2 ON pika1.company_name\n" +
+                "= pika2.company_name JOIN pika3 ON pika3.company_name = pika1.company_name JOIN \n" +
+                "pika4 ON pika4.company_name = pika1.company_name\n" +
                 "\n";
         NativeQuery nativeQuery =  entityManager.createNativeQuery(query).unwrap(org.hibernate.query.NativeQuery.class);
         List<Object> resultList = nativeQuery.getResultList();
@@ -126,6 +131,15 @@ public class JobFetchServiceImpl implements JobFetchService {
         return result;
     }
 
+    @Override
+    public JobsDataRes getJobsData() {
+        Long placed = jobPostedRepo.findPlaced();
+        Long unplaced = jobPostedRepo.findUnplaced();
+        JobsDataRes jobsDataRes = new JobsDataRes();
+        jobsDataRes.setPlaced(placed);
+        jobsDataRes.setUnplaced(unplaced);
+        return jobsDataRes;
+    }
 
 
     String  getBranchName(JobPostedDto jobPostedDto)

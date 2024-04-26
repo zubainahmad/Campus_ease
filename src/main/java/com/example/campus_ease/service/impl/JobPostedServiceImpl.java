@@ -28,8 +28,10 @@ public class JobPostedServiceImpl implements JobPostedService {
         if(jobPostedDto.getManagement()==null){
             JobManagementDto jobManagementDto = new JobManagementDto();
             jobManagementDto.setAppliedStudents(new ArrayList<>());
+            jobManagementDto.setPlacedStudents(new ArrayList<>());
             jobPostedDto.setManagement(jobManagementDto);
         }
+
         JobPostedEntity jobPostedEntity = jobPostedMapper.jobPostedDtoToJobPostedEntity(jobPostedDto);
         JobPostedEntity standardEntity = jobPostedRepo.save(jobPostedEntity);
         JobPostedDto addedJob = jobPostedMapper.jobPostedEntityToJobPostedDto(standardEntity);

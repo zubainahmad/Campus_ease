@@ -17,4 +17,6 @@ public class JobManagementDto {
 
     private ArrayList<String> appliedStudents;
 
+    private ArrayList<String> placedStudents;
+
 }
