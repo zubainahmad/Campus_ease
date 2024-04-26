@@ -124,5 +124,14 @@ curl --location 'https://campus-ease.onrender.com/jobs'
 
 
 
+## Get jobs data in ccpd application
+
+</br>
+
+```
+curl --location 'https://campus-ease.onrender.com/jobs/data'
+
+```
+
 
 
