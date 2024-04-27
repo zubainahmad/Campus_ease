@@ -12,4 +12,6 @@ public class JobsDataRes {
     private Long placed;
 
     private Long unplaced;
+
+    private Long upcomingDrives;
 }

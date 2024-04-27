@@ -138,6 +138,7 @@ public class JobFetchServiceImpl implements JobFetchService {
         JobsDataRes jobsDataRes = new JobsDataRes();
         jobsDataRes.setPlaced(placed);
         jobsDataRes.setUnplaced(unplaced);
+        jobsDataRes.setUpcomingDrives(jobPostedRepo.findUpcomingDrives());
         return jobsDataRes;
     }
 
