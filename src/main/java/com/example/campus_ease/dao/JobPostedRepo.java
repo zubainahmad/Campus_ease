@@ -21,4 +21,8 @@ public interface JobPostedRepo extends JpaRepository<JobPostedEntity,Long> {
                ")\n" +
                "SELECT COUNT(pika.date) FROM pika WHERE pika.date > current_date\n",nativeQuery = true)
        Long findUpcomingDrives();
+
+       @Query(value = "SELECT COUNT(first_name) FROM \"public\".job_posted_entity AS jp JOIN \"public\".student_info_entity AS se\n" +
+               "ON jp.branch_id = se.branch_id ",nativeQuery = true)
+       Long findtotalOffers();
 }
