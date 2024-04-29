@@ -133,5 +133,13 @@ curl --location 'https://campus-ease.onrender.com/jobs/data'
 
 ```
 
+## GET jobs info in ccpd application
+
+</br>
+
+```
+curl --location 'https://campus-ease.onrender.com/jobs/info?id=552&id=553&id=554'
+
+```
 
 
