@@ -41,6 +41,8 @@ public class JobsInfoRes {
 
     ArrayList<StudentsInfoRes> students;
 
+    CcpdInfoRes ccpd;
+
 
 
 }
