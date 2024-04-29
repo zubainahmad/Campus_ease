@@ -8,10 +8,13 @@ import com.example.campus_ease.request.JobPostedReq;
 import com.example.campus_ease.response.JobRes;
 import com.example.campus_ease.response.JobsCcpdRes;
 import com.example.campus_ease.response.JobsDataRes;
+import com.example.campus_ease.response.JobsInfoRes;
 import com.example.campus_ease.shared.dto.JobPostedDto;
+import com.fasterxml.jackson.databind.JsonNode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -66,6 +69,12 @@ public class JobPostedController {
     @GetMapping("/jobs/data")
     public ResponseEntity<JobsDataRes> getJobsData(){
         return ResponseEntity.ok().body(jobFetchManagement.getJobsData());
+    }
+
+    @GetMapping("/jobs/info")
+    public ResponseEntity<JobsInfoRes> getJobsInfo(@RequestParam ArrayList<Long> id){
+        return ResponseEntity.ok().body(jobFetchManagement.getJobsInfo(id));
+
     }
 
 

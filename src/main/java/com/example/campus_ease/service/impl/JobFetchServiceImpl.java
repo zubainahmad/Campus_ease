@@ -4,10 +4,7 @@ import com.example.campus_ease.dao.JobPostedRepo;
 import com.example.campus_ease.dao.StudentInfoRepo;
 import com.example.campus_ease.entity.JobPostedEntity;
 import com.example.campus_ease.mapper.JobPostedMapper;
-import com.example.campus_ease.response.JobRes;
-import com.example.campus_ease.response.JobResponse;
-import com.example.campus_ease.response.JobsCcpdRes;
-import com.example.campus_ease.response.JobsDataRes;
+import com.example.campus_ease.response.*;
 import com.example.campus_ease.service.JobFetchService;
 import com.example.campus_ease.shared.dto.JobPostedDto;
 import com.example.campus_ease.shared.utils.enums.Branch;
@@ -18,6 +15,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import jakarta.persistence.EntityManager;
 import org.hibernate.query.NativeQuery;
+import org.springframework.boot.autoconfigure.batch.BatchProperties;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -142,6 +140,38 @@ public class JobFetchServiceImpl implements JobFetchService {
         jobsDataRes.setUpcomingDrives(jobPostedRepo.findUpcomingDrives());
         jobsDataRes.setTotalOffers(totalOffers);
         return jobsDataRes;
+    }
+
+    @Override
+    public JobsInfoRes getJobsInfo(ArrayList<Long> id) {
+        String query = "WITH pika AS(\n" +
+                "SELECT ARRAY_AGG(id) AS id, ARRAY_AGG(management_id) AS management_id, ARRAY_AGG(branch_id) AS branch_ids,company_name, end_date, expctc, file, job_description, job_profile\n" +
+                ", reg_link, start_date, minimum_percentage, job_location, user_id, website_url FROM \"public\".job_posted_entity WHERE\n" +
+                "id IN :id\n" +
+                "GROUP BY (company_name, end_date, expctc, file, job_description, job_profile\n" +
+                ", reg_link, start_date, minimum_percentage, job_location, user_id, website_url)\n" +
+                "),\n" +
+                "pika2 AS(\n" +
+                "SELECT * FROM pika, unnest(branch_ids) AS branch_id\n" +
+                ")\n" +
+                "SELECT JSON_BUILD_OBJECT('id',id,'management_id',management_id,'branch_id',branch_ids,'ccpd_id',pika2.user_id,'company_name',company_name,'end_date',end_date,'expctc',expctc,'file',file,'job_description',job_description,'job_profile',job_profile,\n" +
+                "\t\t\t\t\t\t'reg_link',reg_link,'start_date',start_date,'minimum_percentage',minimum_percentage,'job_location',job_location,'website_url',website_url,'students',JSON_AGG(JSON_BUILD_OBJECT('student_id',se.user_id,'college_admission_number',college_admission_number,'email',email\n" +
+                "\t\t\t\t\t\t,'first_name',first_name,'last_name',last_name,'percentage',percentage,'roll_number',roll_number,'sgpa',sgpa,'branch_id',se.branch_id))) FROM pika2 JOIN \"public\".student_info_entity AS se ON \n" +
+                "pika2.branch_id = se.branch_id\n" +
+                "GROUP BY (id, management_id, branch_ids, company_name, end_date, expctc, file, job_description, job_profile\n" +
+                ", reg_link, start_date, minimum_percentage, job_location, pika2.user_id, website_url)\n";
+        NativeQuery nativeQuery =  entityManager.createNativeQuery(query).unwrap(org.hibernate.query.NativeQuery.class);
+        nativeQuery.setParameter("id",id);
+        Object result = nativeQuery.getSingleResult();
+        ObjectMapper objectMapper = new ObjectMapper();
+        JobsInfoRes res;
+        try {
+             res = objectMapper.readValue(result.toString(), JobsInfoRes.class);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
+
+        return res;
     }
 
 
