@@ -203,6 +203,8 @@ public class JobFetchServiceImpl implements JobFetchService {
            studentsJobsInfoRes.getBranches().add(getBranchNameByString(branchId));
         }
 
+        studentsJobsInfoRes.setJob_id(id);
+
         return studentsJobsInfoRes;
     }
 

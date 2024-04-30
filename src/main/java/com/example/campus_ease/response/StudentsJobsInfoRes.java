@@ -11,6 +11,9 @@ import java.util.ArrayList;
 @AllArgsConstructor
 @Data
 public class StudentsJobsInfoRes {
+
+    private Long job_id;
+
     private ArrayList<Long> id;
 
     private String company_name;
