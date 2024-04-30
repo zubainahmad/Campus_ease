@@ -208,6 +208,19 @@ public class JobFetchServiceImpl implements JobFetchService {
         return studentsJobsInfoRes;
     }
 
+    @Override
+    public StudentsJobsDataRes getStudentsJobsData(String userId) {
+
+        Long applied = jobPostedRepo.findAppliedJobs(userId);
+        Long pending = jobPostedRepo.findPendingJobs(userId);
+        Long upcoming = jobPostedRepo.findUpcomingJobs(userId);
+        StudentsJobsDataRes studentsJobsDataRes = new StudentsJobsDataRes();
+        studentsJobsDataRes.setApplied(applied);
+        studentsJobsDataRes.setPending(pending);
+        studentsJobsDataRes.setUpcoming(upcoming);
+        return studentsJobsDataRes;
+    }
+
 
     String  getBranchNameByString(Long branchId)
     {

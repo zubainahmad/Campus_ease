@@ -81,7 +81,10 @@ public class JobPostedController {
     }
 
 
-
+    @GetMapping("/students/jobs/data")
+    public ResponseEntity<StudentsJobsDataRes> getStudentsJobsData(@RequestParam String userId){
+        return ResponseEntity.ok().body(jobFetchManagement.getStudentsJobsData(userId));
+    }
 
 
 }

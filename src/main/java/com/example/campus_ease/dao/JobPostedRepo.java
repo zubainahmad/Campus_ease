@@ -3,6 +3,8 @@ package com.example.campus_ease.dao;
 import com.example.campus_ease.entity.JobPostedEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.ArrayList;
 
@@ -25,4 +27,34 @@ public interface JobPostedRepo extends JpaRepository<JobPostedEntity,Long> {
        @Query(value = "SELECT COUNT(first_name) FROM \"public\".job_posted_entity AS jp JOIN \"public\".student_info_entity AS se\n" +
                "ON jp.branch_id = se.branch_id ",nativeQuery = true)
        Long findtotalOffers();
+
+       @Query(value = "WITH pika AS \n" +
+               "(\n" +
+               "\tSELECT * FROM student_info_entity WHERE user_id = :userId\n" +
+               ")\n" +
+               "SELECT COUNT(applied_students) FROM pika JOIN \"public\".job_posted_entity AS je ON je.branch_id \n" +
+               "= pika.branch_id JOIN \"public\".job_management_entity AS jme ON jme.id \n" +
+               "= je.management_id WHERE :userId = ANY(applied_students)",nativeQuery = true)
+       Long findAppliedJobs(@Param("userId") String userId);
+
+       @Query(value = "WITH pika AS \n" +
+               "(\n" +
+               "\tSELECT * FROM student_info_entity WHERE user_id = :userId\n" +
+               ")\n" +
+               "SELECT COUNT(applied_students) FROM pika JOIN \"public\".job_posted_entity AS je ON je.branch_id \n" +
+               "= pika.branch_id JOIN \"public\".job_management_entity AS jme ON jme.id \n" +
+               "= je.management_id WHERE NOT :userId = ANY(applied_students)",nativeQuery = true)
+       Long findPendingJobs(@Param("userId") String userId);
+
+       @Query(value = "WITH pika AS \n" +
+               "(\n" +
+               "\tSELECT * FROM student_info_entity WHERE user_id = :userId\n" +
+               "),\n" +
+               "pika2 AS(\n" +
+               "SELECT end_date, TO_DATE(end_date,'DD/MM/YYYY') AS date FROM pika JOIN \"public\".job_posted_entity AS je ON je.branch_id\n" +
+               "= pika.branch_id\n" +
+               ")\n" +
+               "SELECT COUNT(date) FROM pika2 WHERE date > current_date\n",nativeQuery = true)
+       Long findUpcomingJobs(@Param("userId") String userId);
+
 }
