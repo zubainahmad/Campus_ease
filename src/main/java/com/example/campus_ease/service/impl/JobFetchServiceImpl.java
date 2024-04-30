@@ -179,6 +179,62 @@ public class JobFetchServiceImpl implements JobFetchService {
         return res;
     }
 
+    @Override
+    public StudentsJobsInfoRes getStudentsJobsInfo(Long id) {
+        String query = "WITH pika AS(\n" +
+                "SELECT company_name FROM \"public\".job_posted_entity WHERE id = :id\n" +
+                ")\n" +
+                "SELECT JSON_BUILD_OBJECT('id',ARRAY_AGG(id),'company_name',pika.company_name,'end_date',end_date,'expctc',expctc,'file',file,'job_description',job_description,'job_profile',job_profile,'reg_link',reg_link,'start_date',start_date,'minimum_percentage',minimum_percentage,'job_location',job_location,'website_url',website_url,'branch_id',ARRAY_AGG(branch_id)) FROM pika JOIN \"public\".job_posted_entity AS je ON pika.company_name\n" +
+                "= je.company_name\n" +
+                "GROUP BY (pika.company_name,end_date,expctc,file,job_description,job_profile,reg_link,start_date,minimum_percentage,job_location,website_url)\n";
+
+    NativeQuery nativeQuery =  entityManager.createNativeQuery(query).unwrap(org.hibernate.query.NativeQuery.class);
+    nativeQuery.setParameter("id",id);
+    Object o = nativeQuery.getSingleResult();
+    ObjectMapper objectMapper = new ObjectMapper();
+    StudentsJobsInfoRes studentsJobsInfoRes;
+        try {
+            studentsJobsInfoRes = objectMapper.readValue(o.toString(), StudentsJobsInfoRes.class);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
+        ArrayList<Long> branch_id = studentsJobsInfoRes.getBranch_id();
+        for (Long branchId:branch_id) {
+           studentsJobsInfoRes.getBranches().add(getBranchNameByString(branchId));
+        }
+
+        return studentsJobsInfoRes;
+    }
+
+
+    String  getBranchNameByString(Long branchId)
+    {
+        String name;
+        if(branchId.equals(Branch.CS.getBranchId()))
+            name = "CS";
+        else if(branchId .equals(Branch.IT.getBranchId()))
+            name = "IT";
+        else if(branchId.equals(Branch.EN.getBranchId()))
+            name = "EN";
+        else if (branchId.equals(Branch.ECE.getBranchId()))
+            name = "ECE";
+        else if(branchId.equals(Branch.ME.getBranchId()))
+            name = "ME";
+        else if(branchId.equals(Branch.CE.getBranchId()))
+            name = "CE";
+        else if(branchId.equals(Branch.CSE.getBranchId()))
+            name = "CSE";
+        else if(branchId.equals(Branch.CSE_AIML.getBranchId()))
+            name = "CSE-AIML";
+        else if(branchId.equals(Branch.CSE_DS.getBranchId()))
+            name = "CSE-DS";
+        else
+            name = null;
+        return name;
+    }
+
+
+
 
     String  getBranchName(JobPostedDto jobPostedDto)
     {

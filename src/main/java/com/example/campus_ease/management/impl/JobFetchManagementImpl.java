@@ -1,10 +1,7 @@
 package com.example.campus_ease.management.impl;
 
 import com.example.campus_ease.management.JobFetchManagement;
-import com.example.campus_ease.response.JobRes;
-import com.example.campus_ease.response.JobsCcpdRes;
-import com.example.campus_ease.response.JobsDataRes;
-import com.example.campus_ease.response.JobsInfoRes;
+import com.example.campus_ease.response.*;
 import com.example.campus_ease.service.JobFetchService;
 import com.fasterxml.jackson.databind.JsonNode;
 import jakarta.transaction.Transactional;
@@ -40,5 +37,10 @@ public class JobFetchManagementImpl implements JobFetchManagement {
     @Override
     public JobsInfoRes getJobsInfo(ArrayList<Long> id) {
         return jobFetchService.getJobsInfo(id);
+    }
+
+    @Override
+    public StudentsJobsInfoRes getStudentsJobsInfo(Long id) {
+        return jobFetchService.getStudentsJobsInfo(id);
     }
 }
