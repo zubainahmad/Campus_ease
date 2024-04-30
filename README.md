@@ -142,4 +142,14 @@ curl --location 'https://campus-ease.onrender.com/jobs/info?id=552&id=553&id=554
 
 ```
 
+## GET jobs info in student application
+
+</br>
+
+```
+curl --location 'https://campus-ease.onrender.com/students/jobs/info?id=558'
+
+```
+
+
 
