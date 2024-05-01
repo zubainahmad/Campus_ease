@@ -3,6 +3,7 @@ package com.example.campus_ease.service.impl;
 import com.example.campus_ease.dao.JobPostedRepo;
 import com.example.campus_ease.dao.StudentInfoRepo;
 import com.example.campus_ease.entity.JobPostedEntity;
+import com.example.campus_ease.entity.StudentInfoEntity;
 import com.example.campus_ease.mapper.JobPostedMapper;
 import com.example.campus_ease.response.*;
 import com.example.campus_ease.service.JobFetchService;
@@ -210,7 +211,8 @@ public class JobFetchServiceImpl implements JobFetchService {
 
     @Override
     public StudentsJobsDataRes getStudentsJobsData(String userId) {
-
+        StudentInfoEntity studentInfoEntity = studentInfoRepo.findById(userId).get();
+        String firstName = studentInfoEntity.getFirstName();
         Long applied = jobPostedRepo.findAppliedJobs(userId);
         Long pending = jobPostedRepo.findPendingJobs(userId);
         Long upcoming = jobPostedRepo.findUpcomingJobs(userId);
@@ -218,6 +220,7 @@ public class JobFetchServiceImpl implements JobFetchService {
         studentsJobsDataRes.setApplied(applied);
         studentsJobsDataRes.setPending(pending);
         studentsJobsDataRes.setUpcoming(upcoming);
+        studentsJobsDataRes.setName(firstName);
         return studentsJobsDataRes;
     }
 

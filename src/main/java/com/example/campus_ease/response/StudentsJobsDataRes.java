@@ -9,6 +9,8 @@ import lombok.NoArgsConstructor;
 @Data
 public class StudentsJobsDataRes {
 
+    private String name;
+
     private Long applied;
 
     private Long pending;

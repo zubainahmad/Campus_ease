@@ -30,4 +30,8 @@ public class JobResponse {
     private String endDate;
 
     private String branches;
+
+    private String jobLocation;
+
+    private String websiteUrl;
 }
