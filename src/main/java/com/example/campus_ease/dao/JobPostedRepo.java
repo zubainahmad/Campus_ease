@@ -84,7 +84,9 @@ public interface JobPostedRepo extends JpaRepository<JobPostedEntity,Long> {
        Long findInJobTotal(@Param("id") ArrayList<Long> id);
 
 
-       @Query(value = "SELECT company_name FROM \"public\".job_posted_entity WHERE id IN :id\n",nativeQuery = true)
+       @Query(value = "SELECT company_name FROM \"public\".job_posted_entity WHERE id IN :id GROUP BY company_name\n",nativeQuery = true)
          String findCompanyNameByIds(@Param("id") ArrayList<Long> id);
 
+       @Query(value = "SELECT company_name FROM \"public\".job_posted_entity LIMIT 1",nativeQuery = true)
+       String dbCheck();
 }

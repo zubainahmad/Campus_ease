@@ -21,6 +21,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class JobFetchServiceImpl implements JobFetchService {
@@ -91,6 +92,9 @@ public class JobFetchServiceImpl implements JobFetchService {
     @Override
     public List<JobsCcpdRes> getCcpdJobs() {
 
+        String name = jobPostedRepo.dbCheck();
+        if(Objects.isNull(name))
+            return new ArrayList<>();
         String query = "WITH pika1 AS(\n" +
                 "SELECT company_name, COUNT(unnested_students) AS registered_candidates\n" +
                 "FROM \"public\".job_posted_entity AS jp\n" +
