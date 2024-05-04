@@ -16,7 +16,7 @@ public class JobsInfoRes {
 
     private ArrayList<Long>  branch_id;
 
-    private String ccpd_id;
+    ArrayList<String> branches = new ArrayList<String>();
 
     private String company_name;
 
@@ -39,10 +39,6 @@ public class JobsInfoRes {
     private String job_location;
     private String website_url;
 
-    ArrayList<StudentsInfoRes> students;
-
-    CcpdInfoRes ccpd;
-
-
+    InJobDataRes data;
 
 }

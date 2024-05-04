@@ -57,4 +57,34 @@ public interface JobPostedRepo extends JpaRepository<JobPostedEntity,Long> {
                "SELECT COUNT(date) FROM pika2 WHERE date > current_date\n",nativeQuery = true)
        Long findUpcomingJobs(@Param("userId") String userId);
 
+
+       @Query(value = "WITH pika AS(\n" +
+               "SELECT company_name, se.user_id AS user_id, jme.applied_students AS applied_students FROM \"public\".job_posted_entity AS je JOIN  \"public\".job_management_entity\n" +
+               "AS jme ON je.management_id = jme.id LEFT JOIN \"public\".student_info_entity AS se\n" +
+               "ON se.branch_id = je.branch_id WHERE je.id IN :id\n" +
+               ")\n" +
+               "SELECT COUNT(user_id) FROM pika WHERE user_id = ANY(applied_students)",nativeQuery = true)
+       Long findInJobRegistered(@Param("id") ArrayList<Long> id);
+
+
+       @Query(value = "WITH pika AS(\n" +
+               "SELECT company_name, se.user_id AS user_id, jme.applied_students AS applied_students FROM \"public\".job_posted_entity AS je JOIN  \"public\".job_management_entity\n" +
+               "AS jme ON je.management_id = jme.id LEFT JOIN \"public\".student_info_entity AS se\n" +
+               "ON se.branch_id = je.branch_id WHERE je.id IN :id\n" +
+               ")\n" +
+               "SELECT COUNT(user_id) FROM pika WHERE NOT user_id = ANY(applied_students)",nativeQuery = true)
+       Long findInJobPending(@Param("id") ArrayList<Long> id);
+
+       @Query(value = "WITH pika AS(\n" +
+               "SELECT company_name, se.user_id AS user_id, jme.applied_students AS applied_students FROM \"public\".job_posted_entity AS je JOIN  \"public\".job_management_entity\n" +
+               "AS jme ON je.management_id = jme.id LEFT JOIN \"public\".student_info_entity AS se\n" +
+               "ON se.branch_id = je.branch_id WHERE je.id IN :id\n" +
+               ")\n" +
+               "SELECT COUNT(user_id) FROM pika",nativeQuery = true)
+       Long findInJobTotal(@Param("id") ArrayList<Long> id);
+
+
+       @Query(value = "SELECT company_name FROM \"public\".job_posted_entity WHERE id IN :id\n",nativeQuery = true)
+         String findCompanyNameByIds(@Param("id") ArrayList<Long> id);
+
 }

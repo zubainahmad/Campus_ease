@@ -145,29 +145,23 @@ public class JobFetchServiceImpl implements JobFetchService {
 
     @Override
     public JobsInfoRes getJobsInfo(ArrayList<Long> id) {
+
+        String name = jobPostedRepo.findCompanyNameByIds(id);
         String query = "WITH pika AS(\n" +
                 "SELECT ARRAY_AGG(id) AS id, ARRAY_AGG(management_id) AS management_id, ARRAY_AGG(branch_id) AS branch_ids,company_name, end_date, expctc, file, job_description, job_profile\n" +
                 ", reg_link, start_date, minimum_percentage, job_location, user_id, website_url FROM \"public\".job_posted_entity WHERE\n" +
-                "id IN :id\n" +
+                "company_name = :name\n" +
                 "GROUP BY (company_name, end_date, expctc, file, job_description, job_profile\n" +
                 ", reg_link, start_date, minimum_percentage, job_location, user_id, website_url)\n" +
-                "),\n" +
-                "pika2 AS\n" +
-                "(\n" +
-                "\tSELECT *, ce.user_id AS ccpd_id FROM pika JOIN \"public\".ccpd_info_entity AS ce ON ce.user_id = pika.user_id\n" +
-                "),\n" +
-                "pika3 AS(\n" +
-                "\tSELECT * FROM pika2, unnest(branch_ids) AS branch_id \n" +
                 ")\n" +
-                "SELECT JSON_BUILD_OBJECT('id',id,'management_id',management_id,'branch_id',branch_ids,'ccpd',JSON_BUILD_OBJECT('ccpd_id',ccpd_id,'email',pika3.email,'first_name',pika3.first_name,'last_name',pika3.last_name),'company_name',company_name,'end_date',end_date,'expctc',expctc,'file',file,'job_description',job_description,'job_profile',job_profile,\n" +
-                "\t\t\t\t\t\t'reg_link',reg_link,'start_date',start_date,'minimum_percentage',minimum_percentage,'job_location',job_location,'website_url',website_url,'students',JSON_AGG(JSON_BUILD_OBJECT('student_id',se.user_id,'college_admission_number',college_admission_number,'email',se.email\n" +
-                "\t\t\t\t\t\t,'first_name',se.first_name,'last_name',se.last_name,'percentage',percentage,'roll_number',roll_number,'sgpa',sgpa,'branch_id',se.branch_id))) FROM pika3 JOIN \"public\".student_info_entity AS se ON \n" +
-                "pika3.branch_id = se.branch_id \n" +
+                "SELECT JSON_BUILD_OBJECT('id',id,'management_id',management_id,'branch_id',branch_ids,'company_name',company_name,'end_date',end_date,'expctc',expctc,'file',file,'job_description',job_description,'job_profile',job_profile,\n" +
+                "\t\t\t\t\t\t'reg_link',reg_link,'start_date',start_date,'minimum_percentage',minimum_percentage,'job_location',job_location,'website_url',website_url) FROM pika\n" +
                 "GROUP BY (id, management_id, branch_ids, company_name, end_date, expctc, file, job_description, job_profile\n" +
-                ", reg_link, start_date, minimum_percentage, job_location,website_url,ccpd_id,pika3.email,pika3.first_name,pika3.last_name)\n" +
+                ", reg_link, start_date, minimum_percentage, job_location,website_url)\n" +
+                "\n" +
                 "\n";
         NativeQuery nativeQuery =  entityManager.createNativeQuery(query).unwrap(org.hibernate.query.NativeQuery.class);
-        nativeQuery.setParameter("id",id);
+        nativeQuery.setParameter("name",name);
         Object result = nativeQuery.getSingleResult();
         ObjectMapper objectMapper = new ObjectMapper();
         JobsInfoRes res;
@@ -176,8 +170,25 @@ public class JobFetchServiceImpl implements JobFetchService {
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
-
+        ArrayList<Long> branch_id = res.getBranch_id();
+        for (Long branchId:branch_id) {
+            res.getBranches().add(getBranchNameByString(branchId));
+        }
+        id = res.getId();
+       res.setData(getInJobData(id));
         return res;
+    }
+
+    private InJobDataRes getInJobData(ArrayList<Long> id) {
+
+        Long registered = jobPostedRepo.findInJobRegistered(id);
+        Long unregistered = jobPostedRepo.findInJobPending(id);
+        Long total = jobPostedRepo.findInJobTotal(id);
+        InJobDataRes inJobDataRes = new InJobDataRes();
+        inJobDataRes.setRegistered(registered);
+        inJobDataRes.setUnregistered(unregistered);
+        inJobDataRes.setTotal(total);
+        return inJobDataRes;
     }
 
     @Override
