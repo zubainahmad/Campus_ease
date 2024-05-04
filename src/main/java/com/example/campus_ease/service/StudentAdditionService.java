@@ -8,4 +8,6 @@ public interface StudentAdditionService {
     StudentAdditionDto updateStudent(StudentAdditionDto standardStudentAdditionDto);
 
     StudentAdditionDto getStudent(String userID);
+
+    StudentAdditionDto getStudents(String userId);
 }

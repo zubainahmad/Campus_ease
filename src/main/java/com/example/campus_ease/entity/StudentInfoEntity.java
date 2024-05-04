@@ -30,7 +30,7 @@ public class StudentInfoEntity {
 
     private Long branchId;
 
-    private String SGPA;
+    private String sgpa;
 
     private String percentage;
 

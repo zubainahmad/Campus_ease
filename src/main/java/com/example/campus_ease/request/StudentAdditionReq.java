@@ -28,7 +28,7 @@ public class StudentAdditionReq {
 
     private String branch;
 
-    private String SGPA;
+    private String sgpa;
 
     private String percentage;
 

@@ -2,6 +2,7 @@ package com.example.campus_ease.mapper;
 
 import com.example.campus_ease.entity.StudentInfoEntity;
 import com.example.campus_ease.request.StudentAdditionReq;
+import com.example.campus_ease.response.StudentsRes;
 import com.example.campus_ease.shared.dto.StudentAdditionDto;
 import org.mapstruct.Mapper;
 
@@ -14,4 +15,5 @@ public interface StudentAdditionMapper {
     StudentAdditionDto studentInfoEntityToStudentAdditionDto(StudentInfoEntity studentInfoEntity);
 
 
+    StudentsRes studentAdditionDtoToStudentsRes(StudentAdditionDto studentAdditionDto);
 }

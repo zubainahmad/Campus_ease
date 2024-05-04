@@ -6,6 +6,7 @@ import com.example.campus_ease.mapper.CcpdAdditionMapper;
 import com.example.campus_ease.mapper.StudentAdditionMapper;
 import com.example.campus_ease.request.CcpdAdditionReq;
 import com.example.campus_ease.request.StudentAdditionReq;
+import com.example.campus_ease.response.StudentsRes;
 import com.example.campus_ease.shared.dto.CcpdAdditionDto;
 import com.example.campus_ease.shared.dto.StudentAdditionDto;
 import org.springframework.http.ResponseEntity;
@@ -43,9 +44,15 @@ public class UserController {
     public ResponseEntity<String> updateStudent(@RequestBody StudentAdditionReq studentAdditionReq){
         StudentAdditionDto studentAdditionDto = studentAdditionMapper.studentReqToStudentAdditionDto(studentAdditionReq);
         StudentAdditionDto standardDto = studentAdditionManagement.updateStudent(studentAdditionDto);
-        return ResponseEntity.ok().body("User updated successfully");
+        return ResponseEntity.ok().body("Details added successfully");
     }
 
+    @GetMapping("/students/{userId}")
+    public ResponseEntity<StudentsRes> getStudents(@PathVariable String userId){
+        StudentAdditionDto studentAdditionDto = studentAdditionManagement.getStudents(userId);
+        StudentsRes studentsRes = studentAdditionMapper.studentAdditionDtoToStudentsRes(studentAdditionDto);
+        return ResponseEntity.ok().body(studentsRes);
+    }
     @PostMapping("/ccpd")
     public ResponseEntity<String> addCcpd(@RequestBody CcpdAdditionReq ccpdAdditionReq){
         CcpdAdditionDto ccpdAdditionDto = ccpdAdditionMapper.ccpdAdditionReqToCcpdAdditionDto(ccpdAdditionReq);

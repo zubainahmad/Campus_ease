@@ -33,6 +33,11 @@ public class StudentAdditionManagementImpl implements StudentAdditionManagement 
         return studentAdditionService.getStudent(userID);
     }
 
+    @Override
+    public StudentAdditionDto getStudents(String userId) {
+        return studentAdditionService.getStudents(userId);
+    }
+
     StudentAdditionDto getBranchId(StudentAdditionDto studentAdditionDto)
     {
         Long branchId;

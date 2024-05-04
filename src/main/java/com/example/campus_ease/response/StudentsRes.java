@@ -1,15 +1,12 @@
-package com.example.campus_ease.shared.dto;
+package com.example.campus_ease.response;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @NoArgsConstructor
 @AllArgsConstructor
-@Getter
-@Setter
-public class StudentAdditionDto {
+@Data
+public class StudentsRes {
+
     private String userId;
 
     private String firstName;
@@ -22,17 +19,10 @@ public class StudentAdditionDto {
 
     private String email;
 
-    private Long tokenId;
-
     private String branch;
-
-    private Long branchId;
 
     private String sgpa;
 
     private String percentage;
 
-    private String unknown1;
-
-    private String unknown2;
 }
