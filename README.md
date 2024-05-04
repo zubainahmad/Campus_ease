@@ -36,7 +36,8 @@ curl --location 'https://campus-ease.onrender.com/student' \
     "email" : "wxam@gmail.com",
     "branch" : "CS",
     "SGPA" : "9.0",
-    "percentage" : "94"
+    "percentage" : "94",
+    "imageUrl" : "https://"
     
 }'
 
@@ -54,7 +55,8 @@ curl --location --request PUT 'https://campus-ease.onrender.com/student' \
     "email" : "wxam@gmail.com",
     "branch" : "CS",
     "SGPA" : "9.0",
-    "percentage" : "94"
+    "percentage" : "94",
+    "imageUrl" : "https://" 
     
 }'
 ```
