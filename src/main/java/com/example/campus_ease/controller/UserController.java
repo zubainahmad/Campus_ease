@@ -37,14 +37,14 @@ public class UserController {
     public ResponseEntity<String> addStudent(@RequestBody StudentAdditionReq studentAdditionReq){
         StudentAdditionDto studentAdditionDto = studentAdditionMapper.studentReqToStudentAdditionDto(studentAdditionReq);
         StudentAdditionDto standardDto = studentAdditionManagement.addStudent(studentAdditionDto);
-        return ResponseEntity.ok().body("User added successfully");
+        return ResponseEntity.ok().body("Details added successfully");
     }
 
     @PutMapping("/student")
     public ResponseEntity<String> updateStudent(@RequestBody StudentAdditionReq studentAdditionReq){
         StudentAdditionDto studentAdditionDto = studentAdditionMapper.studentReqToStudentAdditionDto(studentAdditionReq);
         StudentAdditionDto standardDto = studentAdditionManagement.updateStudent(studentAdditionDto);
-        return ResponseEntity.ok().body("Details added successfully");
+        return ResponseEntity.ok().body("User updated successfully");
     }
 
     @GetMapping("/students/{userId}")

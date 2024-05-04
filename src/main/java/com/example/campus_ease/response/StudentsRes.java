@@ -25,4 +25,6 @@ public class StudentsRes {
 
     private String percentage;
 
+    private String imageUrl;
+
 }

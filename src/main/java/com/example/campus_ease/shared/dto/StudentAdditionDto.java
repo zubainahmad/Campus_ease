@@ -32,7 +32,7 @@ public class StudentAdditionDto {
 
     private String percentage;
 
-    private String unknown1;
+    private String imageUrl;
 
     private String unknown2;
 }
