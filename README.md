@@ -59,6 +59,18 @@ curl --location --request PUT 'https://campus-ease.onrender.com/student' \
 }'
 ```
 
+## Get a student
+
+</br>
+
+```
+curl --location 'https://campus-ease.onrender.com/students/fkjsnfkljanjfknddvxcbxbxcbffsf' \
+--header 'Content-Type: application/json' \
+--data ''
+
+```
+
+
 ## Check student exists or not
 ```
 curl --location 'https://campus-ease.onrender.com/student/f4760eb9-c897-426f-8aec-c93205a07172'
