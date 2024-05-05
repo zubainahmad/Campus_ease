@@ -83,6 +83,14 @@ public class JobFetchServiceImpl implements JobFetchService {
         }
 
         JobRes jobRes = new JobRes();
+        for (JobResponse jobResponse:filled) {
+            String branch = jobResponse.getBranches();
+            jobResponse.getBranch().add(branch);
+        }
+        for (JobResponse jobResponse:unfilled) {
+            String branch = jobResponse.getBranches();
+            jobResponse.getBranch().add(branch);
+        }
         jobRes.setFilled(filled);
         jobRes.setUnfilled(unfilled);
 

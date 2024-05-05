@@ -1,10 +1,13 @@
 package com.example.campus_ease.response;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.util.ArrayList;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -29,10 +32,12 @@ public class JobResponse {
     private String startDate;
     @JsonProperty("end_date")
     private String endDate;
-    @JsonProperty("branches")
+    @JsonIgnore
     private String branches;
     @JsonProperty("job_location")
     private String jobLocation;
     @JsonProperty("website_url")
     private String websiteUrl;
+    @JsonProperty("branches")
+    private ArrayList<String> branch = new ArrayList<>();
 }
