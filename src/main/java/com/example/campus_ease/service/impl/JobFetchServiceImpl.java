@@ -208,7 +208,7 @@ public class JobFetchServiceImpl implements JobFetchService {
         String query = "WITH pika AS(\n" +
                 "SELECT company_name FROM \"public\".job_posted_entity WHERE id = :id\n" +
                 ")\n" +
-                "SELECT JSON_BUILD_OBJECT('id',ARRAY_AGG(id),'company_name',pika.company_name,'end_date',end_date,'expctc',expctc,'file',file,'job_description',job_description,'job_profile',job_profile,'reg_link',reg_link,'start_date',start_date,'minimum_percentage',minimum_percentage,'job_location',job_location,'website_url',website_url,'branch_id',ARRAY_AGG(branch_id)) FROM pika JOIN \"public\".job_posted_entity AS je ON pika.company_name\n" +
+                "SELECT JSON_BUILD_OBJECT('id',ARRAY_AGG(id),'company_name',pika.company_name,'end_date',end_date,'exp_ctc',expctc,'file',file,'job_description',job_description,'job_profile',job_profile,'reg_link',reg_link,'start_date',start_date,'minimum_percentage',minimum_percentage,'job_location',job_location,'website_url',website_url,'branch_id',ARRAY_AGG(branch_id)) FROM pika JOIN \"public\".job_posted_entity AS je ON pika.company_name\n" +
                 "= je.company_name\n" +
                 "GROUP BY (pika.company_name,end_date,expctc,file,job_description,job_profile,reg_link,start_date,minimum_percentage,job_location,website_url)\n";
 
