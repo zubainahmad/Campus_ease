@@ -20,7 +20,7 @@ public class StudentsJobsInfoRes {
 
     private String end_date;
 
-    private String expctc;
+    private String exp_ctc;
 
     private String file;
 
