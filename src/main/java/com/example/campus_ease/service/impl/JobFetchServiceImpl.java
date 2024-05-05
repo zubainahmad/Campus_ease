@@ -5,9 +5,11 @@ import com.example.campus_ease.dao.StudentInfoRepo;
 import com.example.campus_ease.entity.JobPostedEntity;
 import com.example.campus_ease.entity.StudentInfoEntity;
 import com.example.campus_ease.mapper.JobPostedMapper;
+import com.example.campus_ease.mapper.StudentAdditionMapper;
 import com.example.campus_ease.response.*;
 import com.example.campus_ease.service.JobFetchService;
 import com.example.campus_ease.shared.dto.JobPostedDto;
+import com.example.campus_ease.shared.dto.StudentsJobsInfoDto;
 import com.example.campus_ease.shared.utils.enums.Branch;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonDeserializer;
@@ -33,11 +35,15 @@ public class JobFetchServiceImpl implements JobFetchService {
 
    private EntityManager entityManager;
 
-    public JobFetchServiceImpl(JobPostedRepo jobPostedRepo, JobPostedMapper jobPostedMapper, StudentInfoRepo studentInfoRepo, EntityManager entityManager) {
+
+   private StudentAdditionMapper studentAdditionMapper;
+
+    public JobFetchServiceImpl(JobPostedRepo jobPostedRepo, JobPostedMapper jobPostedMapper, StudentInfoRepo studentInfoRepo, EntityManager entityManager, StudentAdditionMapper studentAdditionMapper) {
         this.jobPostedRepo = jobPostedRepo;
         this.jobPostedMapper = jobPostedMapper;
         this.studentInfoRepo = studentInfoRepo;
         this.entityManager = entityManager;
+        this.studentAdditionMapper = studentAdditionMapper;
     }
 
     @Override
@@ -208,7 +214,7 @@ public class JobFetchServiceImpl implements JobFetchService {
         String query = "WITH pika AS(\n" +
                 "SELECT company_name FROM \"public\".job_posted_entity WHERE id = :id\n" +
                 ")\n" +
-                "SELECT JSON_BUILD_OBJECT('id',ARRAY_AGG(id),'company_name',pika.company_name,'end_date',end_date,'exp_ctc',expctc,'file',file,'job_description',job_description,'job_profile',job_profile,'reg_link',reg_link,'start_date',start_date,'minimum_percentage',minimum_percentage,'job_location',job_location,'website_url',website_url,'branch_id',ARRAY_AGG(branch_id)) FROM pika JOIN \"public\".job_posted_entity AS je ON pika.company_name\n" +
+                "SELECT JSON_BUILD_OBJECT('job_id',ARRAY_AGG(id),'company_name',pika.company_name,'end_date',end_date,'exp_ctc',expctc,'file',file,'job_description',job_description,'job_profile',job_profile,'reg_link',reg_link,'start_date',start_date,'minimum_percentage',minimum_percentage,'job_location',job_location,'website_url',website_url,'branch_id',ARRAY_AGG(branch_id)) FROM pika JOIN \"public\".job_posted_entity AS je ON pika.company_name\n" +
                 "= je.company_name\n" +
                 "GROUP BY (pika.company_name,end_date,expctc,file,job_description,job_profile,reg_link,start_date,minimum_percentage,job_location,website_url)\n";
 
@@ -216,18 +222,20 @@ public class JobFetchServiceImpl implements JobFetchService {
     nativeQuery.setParameter("id",id);
     Object o = nativeQuery.getSingleResult();
     ObjectMapper objectMapper = new ObjectMapper();
-    StudentsJobsInfoRes studentsJobsInfoRes;
+    StudentsJobsInfoDto studentsJobsInfoDto;
         try {
-            studentsJobsInfoRes = objectMapper.readValue(o.toString(), StudentsJobsInfoRes.class);
+            studentsJobsInfoDto = objectMapper.readValue(o.toString(), StudentsJobsInfoDto.class);
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
-        ArrayList<Long> branch_id = studentsJobsInfoRes.getBranch_id();
+        ArrayList<Long> branch_id = studentsJobsInfoDto.getBranch_id();
         for (Long branchId:branch_id) {
-           studentsJobsInfoRes.getBranches().add(getBranchNameByString(branchId));
+           studentsJobsInfoDto.getBranches().add(getBranchNameByString(branchId));
         }
 
-        studentsJobsInfoRes.setJob_id(id);
+        studentsJobsInfoDto.setId(id);
+        StudentsJobsInfoRes studentsJobsInfoRes = new StudentsJobsInfoRes();
+        studentsJobsInfoRes = studentAdditionMapper.studentsJobsInfoDtoToStudentsJobsInfoRes(studentsJobsInfoDto);
 
         return studentsJobsInfoRes;
     }

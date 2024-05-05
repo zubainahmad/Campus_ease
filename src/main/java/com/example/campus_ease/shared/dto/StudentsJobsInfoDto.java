@@ -1,22 +1,17 @@
-package com.example.campus_ease.response;
+package com.example.campus_ease.shared.dto;
 
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
-
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class StudentsJobsInfoRes {
+public class StudentsJobsInfoDto {
 
     private Long id;
 
-    @JsonIgnore
     ArrayList<Long> job_id;
 
     private String company_name;
@@ -41,7 +36,6 @@ public class StudentsJobsInfoRes {
 
     private String website_url;
 
-    @JsonIgnore
     private ArrayList<Long> branch_id;
 
     private ArrayList<String> branches = new ArrayList<>();
