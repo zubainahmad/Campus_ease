@@ -166,7 +166,7 @@ public class JobFetchServiceImpl implements JobFetchService {
                 "GROUP BY (company_name, end_date, expctc, file, job_description, job_profile\n" +
                 ", reg_link, start_date, minimum_percentage, job_location, user_id, website_url)\n" +
                 ")\n" +
-                "SELECT JSON_BUILD_OBJECT('id',id,'management_id',management_id,'branch_id',branch_ids,'company_name',company_name,'end_date',end_date,'expctc',expctc,'file',file,'job_description',job_description,'job_profile',job_profile,\n" +
+                "SELECT JSON_BUILD_OBJECT('id',id,'management_id',management_id,'branch_id',branch_ids,'company_name',company_name,'end_date',end_date,'exp_ctc',expctc,'file',file,'job_description',job_description,'job_profile',job_profile,\n" +
                 "\t\t\t\t\t\t'reg_link',reg_link,'start_date',start_date,'minimum_percentage',minimum_percentage,'job_location',job_location,'website_url',website_url) FROM pika\n" +
                 "GROUP BY (id, management_id, branch_ids, company_name, end_date, expctc, file, job_description, job_profile\n" +
                 ", reg_link, start_date, minimum_percentage, job_location,website_url)\n" +

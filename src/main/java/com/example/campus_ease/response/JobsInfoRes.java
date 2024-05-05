@@ -1,5 +1,6 @@
 package com.example.campus_ease.response;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -22,7 +23,7 @@ public class JobsInfoRes {
 
     private String end_date;
 
-    private String expctc;
+    private String exp_ctc;
 
     private String file;
 
