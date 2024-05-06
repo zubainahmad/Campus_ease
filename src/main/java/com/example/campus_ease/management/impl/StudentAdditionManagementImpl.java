@@ -6,6 +6,10 @@ import com.example.campus_ease.shared.dto.StudentAdditionDto;
 import com.example.campus_ease.shared.utils.enums.Branch;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Component;
+
+import java.util.ArrayList;
+import java.util.List;
+
 @Transactional
 @Component
 public class StudentAdditionManagementImpl implements StudentAdditionManagement {
@@ -36,6 +40,21 @@ public class StudentAdditionManagementImpl implements StudentAdditionManagement 
     @Override
     public StudentAdditionDto getStudents(String userId) {
         return studentAdditionService.getStudents(userId);
+    }
+
+    @Override
+    public List<StudentAdditionDto> getRegisteredStudents(ArrayList<Long> jobId) {
+    return studentAdditionService.getRegisteredStudents(jobId);
+    }
+
+    @Override
+    public List<StudentAdditionDto> getAllStudents(ArrayList<Long> jobId) {
+        return studentAdditionService.getAllStudents(jobId);
+    }
+
+    @Override
+    public List<StudentAdditionDto> getUnregisteredStudents(ArrayList<Long> jobId) {
+        return studentAdditionService.getUnregisteredStudents(jobId);
     }
 
     StudentAdditionDto getBranchId(StudentAdditionDto studentAdditionDto)

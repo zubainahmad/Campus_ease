@@ -12,6 +12,8 @@ import com.example.campus_ease.shared.dto.StudentAdditionDto;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @RestController
@@ -68,4 +70,43 @@ public class UserController {
         else
             return ResponseEntity.ok().body("User does not exist");
     }
+
+    @GetMapping("/students/registered/{jobId}")
+public ResponseEntity<List<StudentsRes>> getRegisteredStudents(@PathVariable ArrayList<Long> jobId){
+        List<StudentAdditionDto> studentAdditionDto = studentAdditionManagement.getRegisteredStudents(jobId);
+        List<StudentsRes> res = new ArrayList<>();
+        for (StudentAdditionDto standarDto:studentAdditionDto) {
+            StudentsRes studentsRes = studentAdditionMapper.studentAdditionDtoToStudentsRes(standarDto);
+            res.add(studentsRes);
+        }
+        return ResponseEntity.ok().body(res);
+    }
+
+
+    @GetMapping("/students/all/{jobId}")
+    public ResponseEntity<List<StudentsRes>> getAllStudents(@PathVariable ArrayList<Long> jobId){
+        List<StudentAdditionDto> studentAdditionDto = studentAdditionManagement.getAllStudents(jobId);
+        List<StudentsRes> res = new ArrayList<>();
+        for (StudentAdditionDto standarDto:studentAdditionDto) {
+            StudentsRes studentsRes = studentAdditionMapper.studentAdditionDtoToStudentsRes(standarDto);
+            res.add(studentsRes);
+        }
+        return ResponseEntity.ok().body(res);
+    }
+
+
+    @GetMapping("/students/unregistered/{jobId}")
+    public ResponseEntity<List<StudentsRes>> getUnregisteredStudents(@PathVariable ArrayList<Long> jobId){
+        List<StudentAdditionDto> studentAdditionDto = studentAdditionManagement.getUnregisteredStudents(jobId);
+        List<StudentsRes> res = new ArrayList<>();
+        for (StudentAdditionDto standarDto:studentAdditionDto) {
+            StudentsRes studentsRes = studentAdditionMapper.studentAdditionDtoToStudentsRes(standarDto);
+            res.add(studentsRes);
+        }
+        return ResponseEntity.ok().body(res);
+    }
+
+
+
+
 }

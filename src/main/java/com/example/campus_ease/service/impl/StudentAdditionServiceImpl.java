@@ -1,13 +1,20 @@
 package com.example.campus_ease.service.impl;
 
+import com.example.campus_ease.dao.JobPostedRepo;
 import com.example.campus_ease.dao.StudentInfoRepo;
 import com.example.campus_ease.entity.StudentInfoEntity;
 import com.example.campus_ease.mapper.StudentAdditionMapper;
 import com.example.campus_ease.service.StudentAdditionService;
 import com.example.campus_ease.shared.dto.StudentAdditionDto;
 import com.example.campus_ease.shared.utils.enums.Branch;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import jakarta.persistence.EntityManager;
+import org.hibernate.query.NativeQuery;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @Service
@@ -17,9 +24,17 @@ public class StudentAdditionServiceImpl implements StudentAdditionService {
 
     private StudentAdditionMapper studentAdditionMapper;
 
-    public StudentAdditionServiceImpl(StudentInfoRepo studentInfoRepo, StudentAdditionMapper studentAdditionMapper) {
+
+    private JobPostedRepo jobPostedRepo;
+
+
+    private EntityManager entityManager;
+
+    public StudentAdditionServiceImpl(StudentInfoRepo studentInfoRepo, StudentAdditionMapper studentAdditionMapper, JobPostedRepo jobPostedRepo, EntityManager entityManager) {
         this.studentInfoRepo = studentInfoRepo;
         this.studentAdditionMapper = studentAdditionMapper;
+        this.jobPostedRepo = jobPostedRepo;
+        this.entityManager = entityManager;
     }
 
     @Override
@@ -58,6 +73,83 @@ public class StudentAdditionServiceImpl implements StudentAdditionService {
         StudentAdditionDto returnValue = studentAdditionMapper.studentInfoEntityToStudentAdditionDto(studentInfoEntity);
         returnValue.setBranch(branch);
         return returnValue;
+    }
+
+    @Override
+    public List<StudentAdditionDto> getRegisteredStudents(ArrayList<Long> jobId) {
+        String name = jobPostedRepo.findCompanyNameByIds(jobId);
+        if(Objects.isNull(name))
+            return new ArrayList<>();
+
+        String query ="SELECT JSON_BUILD_OBJECT('userId',se.user_id,'branchId',se.branch_id,'collegeAdmissionNumber',se.college_admission_number,'email',se.email,'firstName',se.first_name,'lastName',se.last_name,'percentage',se.percentage,'rollNumber',se.roll_number,'sgpa',se.sgpa,'imageUrl',se.image_url) FROM \"public\".job_posted_entity AS je JOIN \"public\".student_info_entity AS\n" +
+                "se ON je.branch_id = se.branch_id JOIN \"public\".job_management_entity AS jme ON jme.id = je.id WHERE company_name = :name\n" +
+                "AND se.user_id = ANY(applied_students)";
+        NativeQuery nativeQuery = (NativeQuery) entityManager.createNativeQuery(query);
+        nativeQuery.setParameter("name",name);
+        List<Object> result = nativeQuery.getResultList();
+        ObjectMapper objectMapper = new ObjectMapper();
+        List<StudentAdditionDto> studentAdditionDtos = new ArrayList<>();
+        try {
+            for(Object object : result)
+            {
+                StudentAdditionDto studentAdditionDto = objectMapper.readValue(object.toString(),StudentAdditionDto.class);
+                studentAdditionDtos.add(studentAdditionDto);
+            }
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
+        return studentAdditionDtos;
+    }
+
+    @Override
+    public List<StudentAdditionDto> getAllStudents(ArrayList<Long> jobId) {
+        String name = jobPostedRepo.findCompanyNameByIds(jobId);
+        if(Objects.isNull(name))
+            return new ArrayList<>();
+
+        String query = "SELECT JSON_BUILD_OBJECT('userId',se.user_id,'branchId',se.branch_id,'collegeAdmissionNumber',se.college_admission_number,'email',se.email,'firstName',se.first_name,'lastName',se.last_name,'percentage',se.percentage,'rollNumber',se.roll_number,'sgpa',se.sgpa,'imageUrl',se.image_url) FROM \"public\".job_posted_entity AS je JOIN \"public\".student_info_entity AS\n" +
+                "se ON je.branch_id = se.branch_id WHERE company_name = :name\n";
+        NativeQuery nativeQuery = (NativeQuery) entityManager.createNativeQuery(query);
+        nativeQuery.setParameter("name",name);
+        List<Object> result = nativeQuery.getResultList();
+        ObjectMapper objectMapper = new ObjectMapper();
+        List<StudentAdditionDto> studentAdditionDtos = new ArrayList<>();
+        try {
+            for(Object object : result)
+            {
+                StudentAdditionDto studentAdditionDto = objectMapper.readValue(object.toString(),StudentAdditionDto.class);
+                studentAdditionDtos.add(studentAdditionDto);
+            }
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
+        return studentAdditionDtos;
+    }
+
+    @Override
+    public List<StudentAdditionDto> getUnregisteredStudents(ArrayList<Long> jobId) {
+        String name = jobPostedRepo.findCompanyNameByIds(jobId);
+        if(Objects.isNull(name))
+            return new ArrayList<>();
+
+        String query = "SELECT JSON_BUILD_OBJECT('userId',se.user_id,'branchId',se.branch_id,'collegeAdmissionNumber',se.college_admission_number,'email',se.email,'firstName',se.first_name,'lastName',se.last_name,'percentage',se.percentage,'rollNumber',se.roll_number,'sgpa',se.sgpa,'imageUrl',se.image_url) FROM \"public\".job_posted_entity AS je JOIN \"public\".student_info_entity AS\n" +
+                "se ON je.branch_id = se.branch_id JOIN \"public\".job_management_entity AS jme ON jme.id = je.id WHERE company_name = :name\n" +
+                "AND NOT se.user_id = ANY(applied_students)\n";
+        NativeQuery nativeQuery = (NativeQuery) entityManager.createNativeQuery(query);
+        nativeQuery.setParameter("name",name);
+        List<Object> result = nativeQuery.getResultList();
+        ObjectMapper objectMapper = new ObjectMapper();
+        List<StudentAdditionDto> studentAdditionDtos = new ArrayList<>();
+        try {
+            for(Object object : result)
+            {
+                StudentAdditionDto studentAdditionDto = objectMapper.readValue(object.toString(),StudentAdditionDto.class);
+                studentAdditionDtos.add(studentAdditionDto);
+            }
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
+        return studentAdditionDtos;
     }
 
     String  getBranchNameByString(Long branchId)

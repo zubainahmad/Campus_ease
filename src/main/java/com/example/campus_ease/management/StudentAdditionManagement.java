@@ -3,6 +3,9 @@ package com.example.campus_ease.management;
 import com.example.campus_ease.response.StudentsRes;
 import com.example.campus_ease.shared.dto.StudentAdditionDto;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public interface StudentAdditionManagement {
      StudentAdditionDto addStudent(StudentAdditionDto studentAdditionDto);
 
@@ -12,4 +15,10 @@ public interface StudentAdditionManagement {
 
 
      StudentAdditionDto getStudents(String userId);
+
+    List<StudentAdditionDto> getRegisteredStudents(ArrayList<Long> jobId);
+
+    List<StudentAdditionDto> getAllStudents(ArrayList<Long> jobId);
+
+    List<StudentAdditionDto> getUnregisteredStudents(ArrayList<Long> jobId);
 }
