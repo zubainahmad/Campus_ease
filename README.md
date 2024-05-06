@@ -174,6 +174,35 @@ curl --location 'https://campus-ease.onrender.com/students/jobs/data?userId=1'
 
 ```
 
+## CSV unregistered
+
+</br>
+
+```
+curl --location 'https://campus-ease.onrender.com/download/unregistered?id=552'
+
+```
+
+## CSV registered
+
+
+</br>
+
+```
+curl --location 'https://campus-ease.onrender.com/download/registered?id=552'
+
+```
+
+##  CSV all
+
+</br>
+
+```
+curl --location 'https://campus-ease.onrender.com/download/all?id=552'
+
+```
+
+
 
 
 
