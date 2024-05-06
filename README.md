@@ -202,6 +202,34 @@ curl --location 'https://campus-ease.onrender.com/download/all?id=552'
 
 ```
 
+## Students registered for a job
+
+</br>
+
+```
+curl --location 'https://campus-ease.onrender.com/students/registered?jobId=552'
+
+```
+
+## Students unregistered for a job
+
+</br>
+
+```
+curl --location 'https://campus-ease.onrender.com/students/unregistered?jobId=552'
+
+```
+
+## All eligible students for a job
+
+</br>
+
+```
+
+curl --location 'https://campus-ease.onrender.com/students/all?jobId=552'
+
+```
+
 
 
 
