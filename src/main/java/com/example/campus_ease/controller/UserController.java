@@ -71,8 +71,8 @@ public class UserController {
             return ResponseEntity.ok().body("User does not exist");
     }
 
-    @GetMapping("/students/registered/{jobId}")
-public ResponseEntity<List<StudentsRes>> getRegisteredStudents(@PathVariable ArrayList<Long> jobId){
+    @GetMapping("/students/registered")
+public ResponseEntity<List<StudentsRes>> getRegisteredStudents(@RequestParam ArrayList<Long> jobId){
         List<StudentAdditionDto> studentAdditionDto = studentAdditionManagement.getRegisteredStudents(jobId);
         List<StudentsRes> res = new ArrayList<>();
         for (StudentAdditionDto standarDto:studentAdditionDto) {
@@ -83,8 +83,8 @@ public ResponseEntity<List<StudentsRes>> getRegisteredStudents(@PathVariable Arr
     }
 
 
-    @GetMapping("/students/all/{jobId}")
-    public ResponseEntity<List<StudentsRes>> getAllStudents(@PathVariable ArrayList<Long> jobId){
+    @GetMapping("/students/all")
+    public ResponseEntity<List<StudentsRes>> getAllStudents(@RequestParam ArrayList<Long> jobId){
         List<StudentAdditionDto> studentAdditionDto = studentAdditionManagement.getAllStudents(jobId);
         List<StudentsRes> res = new ArrayList<>();
         for (StudentAdditionDto standarDto:studentAdditionDto) {
@@ -95,8 +95,8 @@ public ResponseEntity<List<StudentsRes>> getRegisteredStudents(@PathVariable Arr
     }
 
 
-    @GetMapping("/students/unregistered/{jobId}")
-    public ResponseEntity<List<StudentsRes>> getUnregisteredStudents(@PathVariable ArrayList<Long> jobId){
+    @GetMapping("/students/unregistered")
+    public ResponseEntity<List<StudentsRes>> getUnregisteredStudents(@RequestParam ArrayList<Long> jobId){
         List<StudentAdditionDto> studentAdditionDto = studentAdditionManagement.getUnregisteredStudents(jobId);
         List<StudentsRes> res = new ArrayList<>();
         for (StudentAdditionDto standarDto:studentAdditionDto) {
