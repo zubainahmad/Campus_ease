@@ -6,6 +6,7 @@ import com.example.campus_ease.mapper.CcpdAdditionMapper;
 import com.example.campus_ease.mapper.StudentAdditionMapper;
 import com.example.campus_ease.request.CcpdAdditionReq;
 import com.example.campus_ease.request.StudentAdditionReq;
+import com.example.campus_ease.response.CcpdRes;
 import com.example.campus_ease.response.StudentsRes;
 import com.example.campus_ease.shared.dto.CcpdAdditionDto;
 import com.example.campus_ease.shared.dto.StudentAdditionDto;
@@ -60,6 +61,12 @@ public class UserController {
         CcpdAdditionDto ccpdAdditionDto = ccpdAdditionMapper.ccpdAdditionReqToCcpdAdditionDto(ccpdAdditionReq);
         CcpdAdditionDto standardDto = ccpdAdditionManagement.addCcpd(ccpdAdditionDto);
         return ResponseEntity.ok().body("User added successfully");
+    }
+
+    @GetMapping("/ccpd/{userID}")
+    public ResponseEntity<CcpdRes> getCcpd(@PathVariable String userID){
+     CcpdRes ccpdRes = ccpdAdditionManagement.getCcpd(userID);
+        return ResponseEntity.ok().body(ccpdRes);
     }
 
     @GetMapping("/student/{userID}")

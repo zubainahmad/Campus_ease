@@ -1,6 +1,7 @@
 package com.example.campus_ease.management.impl;
 
 import com.example.campus_ease.management.CcpdAdditionManagement;
+import com.example.campus_ease.response.CcpdRes;
 import com.example.campus_ease.service.CcpdAdditionService;
 import com.example.campus_ease.shared.dto.CcpdAdditionDto;
 import jakarta.transaction.Transactional;
@@ -19,5 +20,10 @@ public class CcpdAdditionManagementImpl implements CcpdAdditionManagement {
     @Override
     public CcpdAdditionDto addCcpd(CcpdAdditionDto ccpdAdditionDto) {
         return ccpdAdditionService.addCcpd(ccpdAdditionDto);
+    }
+
+    @Override
+    public CcpdRes getCcpd(String userID) {
+        return ccpdAdditionService.getCcpd(userID);
     }
 }
