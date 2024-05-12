@@ -89,4 +89,18 @@ public interface JobPostedRepo extends JpaRepository<JobPostedEntity,Long> {
 
        @Query(value = "SELECT company_name FROM \"public\".job_posted_entity LIMIT 1",nativeQuery = true)
        String dbCheck();
+
+       @Query(value = "SELECT ARRAY_AGG(se.user_id) FROM \"public\".job_posted_entity AS je JOIN \"public\".student_info_entity AS\n" +
+               "se ON je.branch_id = se.branch_id WHERE company_name = :name",nativeQuery = true)
+       ArrayList<String> findIdsAll(@Param("name") String name);
+
+       @Query(value = "SELECT ARRAY_AGG(se.user_id) FROM \"public\".job_posted_entity AS je JOIN \"public\".student_info_entity AS\n" +
+               "se ON je.branch_id = se.branch_id JOIN \"public\".job_management_entity AS jme ON jme.id = je.id WHERE company_name = :name\n" +
+               "AND se.user_id = ANY(applied_students)\n",nativeQuery = true)
+       ArrayList<String>  findIdsRegistered(@Param("name") String name);
+
+       @Query(value = "SELECT ARRAY_AGG(se.user_id) FROM \"public\".job_posted_entity AS je JOIN \"public\".student_info_entity AS\n" +
+               "se ON je.branch_id = se.branch_id JOIN \"public\".job_management_entity AS jme ON jme.id = je.id WHERE company_name = :name\n" +
+               "AND NOT se.user_id = ANY(applied_students)\n",nativeQuery = true)
+       ArrayList<String> findIdsUnregistered(@Param("name") String name);
 }

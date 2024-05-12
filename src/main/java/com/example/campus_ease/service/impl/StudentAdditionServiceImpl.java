@@ -152,6 +152,37 @@ public class StudentAdditionServiceImpl implements StudentAdditionService {
         return studentAdditionDtos;
     }
 
+    @Override
+    public ArrayList<String> notifyAllStudents(ArrayList<Long> jobId) {
+        String name = jobPostedRepo.findCompanyNameByIds(jobId);
+        if(Objects.isNull(name))
+            return new ArrayList<>();
+
+        ArrayList<String> all = jobPostedRepo.findIdsAll(name);
+        return all;
+    }
+
+    @Override
+    public ArrayList<String> notifyRegisteredStudents(ArrayList<Long> jobId) {
+
+        String name = jobPostedRepo.findCompanyNameByIds(jobId);
+        if(Objects.isNull(name))
+            return new ArrayList<>();
+
+        ArrayList<String> registered = jobPostedRepo.findIdsRegistered(name);
+        return registered;
+    }
+
+    @Override
+    public ArrayList<String> notifyUnregisteredStudents(ArrayList<Long> jobId) {
+        String name = jobPostedRepo.findCompanyNameByIds(jobId);
+        if(Objects.isNull(name))
+            return new ArrayList<>();
+
+        ArrayList<String> unregistered = jobPostedRepo.findIdsUnregistered(name);
+        return unregistered;
+    }
+
     String  getBranchNameByString(Long branchId)
     {
         String name;

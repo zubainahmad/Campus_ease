@@ -21,4 +21,10 @@ public interface StudentAdditionManagement {
     List<StudentAdditionDto> getAllStudents(ArrayList<Long> jobId);
 
     List<StudentAdditionDto> getUnregisteredStudents(ArrayList<Long> jobId);
+
+    ArrayList<String> notifyAllStudents(ArrayList<Long> jobId);
+
+    ArrayList<String> notifyRegisteredStudents(ArrayList<Long> jobId);
+
+    ArrayList<String> notifyUnregisteredStudents(ArrayList<Long> jobId);
 }

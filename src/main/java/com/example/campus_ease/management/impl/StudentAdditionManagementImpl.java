@@ -57,6 +57,21 @@ public class StudentAdditionManagementImpl implements StudentAdditionManagement 
         return studentAdditionService.getUnregisteredStudents(jobId);
     }
 
+    @Override
+    public ArrayList<String> notifyAllStudents(ArrayList<Long> jobId) {
+        return studentAdditionService.notifyAllStudents(jobId);
+    }
+
+    @Override
+    public ArrayList<String> notifyRegisteredStudents(ArrayList<Long> jobId) {
+        return studentAdditionService.notifyRegisteredStudents(jobId);
+    }
+
+    @Override
+    public ArrayList<String> notifyUnregisteredStudents(ArrayList<Long> jobId) {
+        return studentAdditionService.notifyUnregisteredStudents(jobId);
+    }
+
     StudentAdditionDto getBranchId(StudentAdditionDto studentAdditionDto)
     {
         Long branchId;

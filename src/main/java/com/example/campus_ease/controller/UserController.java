@@ -107,6 +107,28 @@ public ResponseEntity<List<StudentsRes>> getRegisteredStudents(@RequestParam Arr
     }
 
 
+    @GetMapping("students/notify/all")
+    public ResponseEntity<ArrayList<String>> notifyAllStudents(@RequestParam ArrayList<Long> jobId){
+        ArrayList<String> all = studentAdditionManagement.notifyAllStudents(jobId);
+        return ResponseEntity.ok().body(all);
+    }
+
+
+    @GetMapping("students/notify/registered")
+    public ResponseEntity<ArrayList<String>> notifyRegisteredStudents(@RequestParam ArrayList<Long> jobId){
+        ArrayList<String> registered = studentAdditionManagement.notifyRegisteredStudents(jobId);
+        return ResponseEntity.ok().body(registered);
+    }
+
+    @GetMapping("students/notify/unregistered")
+    public ResponseEntity<ArrayList<String>> notifyUnregisteredStudents(@RequestParam ArrayList<Long> jobId){
+        ArrayList<String> unregistered = studentAdditionManagement.notifyUnregisteredStudents(jobId);
+        return ResponseEntity.ok().body(unregistered);
+    }
+
+
+
+
 
 
 }
