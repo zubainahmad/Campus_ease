@@ -230,6 +230,35 @@ curl --location 'https://campus-ease.onrender.com/students/all?jobId=552'
 
 ```
 
+## Notification all students
+
+</br>
+
+```
+curl --location 'https://campus-ease.onrender.com/students/notify/all?jobId=552'
+
+```
+
+## Notification registered students
+
+</br>
+
+```
+curl --location 'https://campus-ease.onrender.com/students/notify/registered?jobId=552'
+
+```
+
+
+## Notification unregistered students
+
+</br>
+
+```
+curl --location 'https://campus-ease.onrender.com/students/notify/unregistered?jobId=552'
+
+```
+
+
 
 
 
