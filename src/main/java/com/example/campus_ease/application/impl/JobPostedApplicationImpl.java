@@ -3,12 +3,10 @@ package com.example.campus_ease.application.impl;
 import com.example.campus_ease.application.JobPostedApplication;
 import com.example.campus_ease.dao.JobPostedRepo;
 import com.example.campus_ease.management.JobPostedManagement;
-import com.example.campus_ease.service.NotififcationService;
 import com.example.campus_ease.shared.dto.JobPostedDto;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
-import java.util.Objects;
 
 @Component
 public class JobPostedApplicationImpl implements JobPostedApplication {
@@ -18,22 +16,19 @@ public class JobPostedApplicationImpl implements JobPostedApplication {
     JobPostedRepo jobPostedRepo;
 
 
-    NotififcationService notififcationService;
-
-    public JobPostedApplicationImpl(JobPostedManagement jobPostedManagement, JobPostedRepo jobPostedRepo, NotififcationService notififcationService) {
+    public JobPostedApplicationImpl(JobPostedManagement jobPostedManagement, JobPostedRepo jobPostedRepo) {
         this.jobPostedManagement = jobPostedManagement;
         this.jobPostedRepo = jobPostedRepo;
-        this.notififcationService = notififcationService;
     }
 
     @Override
-    public String addJob(JobPostedDto jobPostedDto) {
+    public ArrayList<Long> addJob(JobPostedDto jobPostedDto) {
         ArrayList<JobPostedDto> standardJobPostedDto = jobPostedManagement.addJob(jobPostedDto);
+        ArrayList<Long> jobIds = new ArrayList<>();
         for (JobPostedDto standardDto : standardJobPostedDto) {
-            if (Objects.nonNull(jobPostedRepo.getById(standardDto.getId())))
-                notififcationService.sendNotification(standardDto);
+            jobIds.add(standardDto.getId());
         }
-        return "Job Posted Successfully";
+        return jobIds;
     }
 
 

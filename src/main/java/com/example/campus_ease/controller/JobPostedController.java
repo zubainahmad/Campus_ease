@@ -36,10 +36,10 @@ public class JobPostedController {
     }
 
     @PostMapping("/jobs")
-    public ResponseEntity<String> addJob(@RequestBody JobPostedReq jobPostedReq){
+    public ResponseEntity<ArrayList<Long>> addJob(@RequestBody JobPostedReq jobPostedReq){
         JobPostedDto jobPostedDto = jobPostedMapper.jobPostedRequestToJobPostedDto(jobPostedReq);
-        jobPostedApplication.addJob(jobPostedDto);
-        return ResponseEntity.ok().body("Job added successfully");
+        ArrayList<Long> jobs = jobPostedApplication.addJob(jobPostedDto);
+        return ResponseEntity.ok().body(jobs);
     }
 
     @GetMapping("/jobs/{user_id}")
