@@ -15,7 +15,7 @@ curl --location 'https://campus-ease.onrender.com/jobs' \
     "startDate" : "31/07/2023",
     "endDate" : "31/12/2023",
     "file" : "https://ajflka.com",
-    "branch" : ["EE","CS","IT"],
+    "branch" : ["EN","CS","IT"],
     "minimumPercentage" : "100",
     "userId":"gssgsdgsgr",
     "websiteUrl": "https://ajdk.com/page",
