@@ -20,4 +20,6 @@ public class JobsCcpdRes {
     private Integer pending;
 
     private String driveDate;
+
+    private String postedBy;
 }
