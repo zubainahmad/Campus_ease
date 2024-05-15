@@ -126,7 +126,7 @@ public class JobFetchServiceImpl implements JobFetchService {
                 "\tSELECT company_name, end_date FROM \"public\".job_posted_entity GROUP BY (company_name,end_date)\n" +
                 "),\n" +
                 "pika4 AS(\n" +
-                "SELECT company_name, ce.user_id, first_name, last_name, ARRAY_AGG(id) AS ids FROM \"public\".job_posted_entity AS je JOIN \"public\".ccpd_info_entity AS ce ON je.user_id = ce.user_id  GROUP BY (company_name,ce.user_id,first_name,last_name)\n" +
+                "SELECT company_name, ce.user_id, first_name, last_name, ARRAY_AGG(id) AS ids FROM \"public\".job_posted_entity AS je LEFT JOIN \"public\".ccpd_info_entity AS ce ON je.user_id = ce.user_id  GROUP BY (company_name,ce.user_id,first_name,last_name)\n" +
                 ")\n" +
                 "SELECT JSON_BUILD_OBJECT('id',pika4.ids,'companyName',pika1.company_name,'registered', registered_candidates, 'pending', total_candidates-registered_candidates,'driveDate',end_date, 'postedBy',CONCAT(pika4.first_name,' ',pika4.last_name) )AS jobs_json FROM pika1 JOIN pika2 ON pika1.company_name\n" +
                 "= pika2.company_name JOIN pika3 ON pika3.company_name = pika1.company_name JOIN \n" +
