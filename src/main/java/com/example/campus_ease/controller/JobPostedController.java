@@ -5,6 +5,7 @@ import com.example.campus_ease.management.JobFetchManagement;
 import com.example.campus_ease.mapper.JobPostedMapper;
 import com.example.campus_ease.request.JobFillReq;
 import com.example.campus_ease.request.JobPostedReq;
+import com.example.campus_ease.request.StudentArrayIds;
 import com.example.campus_ease.response.*;
 import com.example.campus_ease.shared.dto.JobPostedDto;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -84,6 +85,17 @@ public class JobPostedController {
     @GetMapping("/students/jobs/data")
     public ResponseEntity<StudentsJobsDataRes> getStudentsJobsData(@RequestParam String userId){
         return ResponseEntity.ok().body(jobFetchManagement.getStudentsJobsData(userId));
+    }
+
+    @GetMapping("jobs/placement/data")
+    public ResponseEntity<List<PlacementDataRes>> getPlacementData(@RequestParam ArrayList<Long> id){
+        return ResponseEntity.ok().body(jobFetchManagement.getPlacementData(id));
+    }
+
+    @PostMapping("/jobs/students/placed")
+    public ResponseEntity<String> addPlaced(@RequestBody StudentArrayIds studentArrayIds){
+        jobPostedApplication.addPlaced(studentArrayIds);
+        return ResponseEntity.ok().body("Added records successfully");
     }
 
 

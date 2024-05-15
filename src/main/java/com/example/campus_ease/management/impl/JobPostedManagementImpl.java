@@ -2,6 +2,7 @@ package com.example.campus_ease.management.impl;
 
 import com.example.campus_ease.management.JobPostedManagement;
 import com.example.campus_ease.request.JobFillReq;
+import com.example.campus_ease.request.StudentArrayIds;
 import com.example.campus_ease.shared.dto.JobPostedDto;
 
 import com.example.campus_ease.service.JobPostedService;
@@ -38,6 +39,11 @@ public class JobPostedManagementImpl implements JobPostedManagement {
     @Override
     public void jobFill(String userId, Long jobId) {
         jobPostedService.jobFill(userId, jobId);
+    }
+
+    @Override
+    public void addPlaced(StudentArrayIds studentArrayIds) {
+        jobPostedService.addPlaced(studentArrayIds);
     }
 
     Long getBranchId(String branch)

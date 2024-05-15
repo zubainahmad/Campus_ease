@@ -3,6 +3,7 @@ package com.example.campus_ease.application.impl;
 import com.example.campus_ease.application.JobPostedApplication;
 import com.example.campus_ease.dao.JobPostedRepo;
 import com.example.campus_ease.management.JobPostedManagement;
+import com.example.campus_ease.request.StudentArrayIds;
 import com.example.campus_ease.shared.dto.JobPostedDto;
 import org.springframework.stereotype.Component;
 
@@ -35,6 +36,11 @@ public class JobPostedApplicationImpl implements JobPostedApplication {
     @Override
     public void jobFill(String userId, Long jobId) {
         jobPostedManagement.jobFill(userId, jobId);
+    }
+
+    @Override
+    public void addPlaced(StudentArrayIds studentArrayIds) {
+        jobPostedManagement.addPlaced(studentArrayIds);
     }
 
 

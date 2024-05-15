@@ -20,4 +20,6 @@ public interface JobFetchManagement {
     StudentsJobsInfoRes getStudentsJobsInfo(Long id);
 
     StudentsJobsDataRes getStudentsJobsData(String userId);
+
+    List<PlacementDataRes> getPlacementData(ArrayList<Long> id);
 }

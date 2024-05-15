@@ -48,4 +48,9 @@ public class JobFetchManagementImpl implements JobFetchManagement {
     public StudentsJobsDataRes getStudentsJobsData(String userId) {
         return jobFetchService.getStudentsJobsData(userId);
     }
+
+    @Override
+    public List<PlacementDataRes> getPlacementData(ArrayList<Long> id) {
+        return jobFetchService.getPlacementData(id);
+    }
 }

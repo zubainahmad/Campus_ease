@@ -103,4 +103,9 @@ public interface JobPostedRepo extends JpaRepository<JobPostedEntity,Long> {
                "se ON je.branch_id = se.branch_id JOIN \"public\".job_management_entity AS jme ON jme.id = je.id WHERE company_name = :name\n" +
                "AND NOT se.user_id = ANY(applied_students)\n",nativeQuery = true)
        ArrayList<String> findIdsUnregistered(@Param("name") String name);
+
+
+       @Query(value = "SELECT branch_id FROM \"public\".student_info_entity WHERE user_id = :studentId",nativeQuery = true)
+       Long findBranchId(@Param("studentId") String studentId);
+
 }

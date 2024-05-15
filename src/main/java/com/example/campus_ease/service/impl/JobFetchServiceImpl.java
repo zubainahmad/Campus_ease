@@ -164,6 +164,8 @@ public class JobFetchServiceImpl implements JobFetchService {
     public JobsInfoRes getJobsInfo(ArrayList<Long> id) {
 
         String name = jobPostedRepo.findCompanyNameByIds(id);
+        if(Objects.isNull(name))
+            return new JobsInfoRes();
         String query = "WITH pika AS(\n" +
                 "SELECT ARRAY_AGG(id) AS id, ARRAY_AGG(management_id) AS management_id, ARRAY_AGG(branch_id) AS branch_ids,company_name, end_date, expctc, file, job_description, job_profile\n" +
                 ", reg_link, start_date, minimum_percentage, job_location, user_id, website_url FROM \"public\".job_posted_entity WHERE\n" +
@@ -252,6 +254,31 @@ public class JobFetchServiceImpl implements JobFetchService {
         studentsJobsDataRes.setUpcoming(upcoming);
         studentsJobsDataRes.setName(firstName);
         return studentsJobsDataRes;
+    }
+
+    @Override
+    public List<PlacementDataRes> getPlacementData(ArrayList<Long> id) {
+        String name = jobPostedRepo.findCompanyNameByIds(id);
+        if(Objects.isNull(name))
+            return new ArrayList<>();
+       String query  = "WITH pika AS(SELECT je.company_name,je.id, se.branch_id, se.college_admission_number, se.first_name, se.last_name, se.roll_number, se.user_id, CASE WHEN se.user_id = ANY(placed_students) THEN 'placed' ELSE 'unplaced' END AS status FROM \"public\".job_posted_entity AS je JOIN \"public\".job_management_entity AS jme ON\n" +
+               "je.management_id = jme.id JOIN \"public\".student_info_entity AS se \n" +
+               "ON je.branch_id =  se.branch_id WHERE company_name = :name)\n" +
+               "SELECT JSON_BUILD_OBJECT('job_id',id,'branch_id',branch_id,'company_name',company_name,'college_admission_number',college_admission_number,'name',CONCAT(first_name,' ',last_name),'roll_number',roll_number,'user_id',user_id,'status',CAST(status AS character varying(255))) FROM pika ";
+        NativeQuery nativeQuery =  entityManager.createNativeQuery(query).unwrap(org.hibernate.query.NativeQuery.class);
+        nativeQuery.setParameter("name",name);
+        List<Object> resultList = nativeQuery.getResultList();
+        List<PlacementDataRes> result = new ArrayList<>();
+        for (Object o : resultList) {
+            ObjectMapper objectMapper = new ObjectMapper();
+            try {
+                PlacementDataRes placementDataRes = objectMapper.readValue(o.toString(), PlacementDataRes.class);
+                result.add(placementDataRes);
+            } catch (JsonProcessingException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        return result;
     }
 
 
