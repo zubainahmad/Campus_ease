@@ -294,6 +294,52 @@ curl --location 'https://campus-ease.onrender.com/jobs/students/placed' \
 
 ```
 
+## Get notification data by reciever id
+
+</br>
+
+```
+curl --location --request GET 'https://campus-ease.onrender.com/notification/data/4343' \
+--header 'Content-Type: application/json' \
+--data '{
+    "id" : [1,3],
+    "status" : "Read"
+}'
+```
+
+## Update notification status
+
+</br>j
+
+```
+
+curl --location 'https://campus-ease.onrender.com/notification/status' \
+--header 'Content-Type: application/json' \
+--data '{
+    "id" : [1,3],
+    "status" : "Read"
+}'
+
+```
+
+## Post notification data 
+
+</br>
+
+```
+curl --location 'https://campus-ease.onrender.com/notification/data' \
+--header 'Content-Type: application/json' \
+--data '{
+    "receiverId" : ["4343","gsgfsdhdf"],
+    "content" : "Tcs is set for hiring",
+    "status" : "Unread"
+}'
+
+```
+
+
+
+
 
 
 
