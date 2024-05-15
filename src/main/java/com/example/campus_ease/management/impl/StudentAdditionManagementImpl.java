@@ -1,7 +1,9 @@
 package com.example.campus_ease.management.impl;
 
 import com.example.campus_ease.management.StudentAdditionManagement;
+import com.example.campus_ease.request.NotificationStatusReq;
 import com.example.campus_ease.service.StudentAdditionService;
+import com.example.campus_ease.shared.dto.NotificationDto;
 import com.example.campus_ease.shared.dto.StudentAdditionDto;
 import com.example.campus_ease.shared.utils.enums.Branch;
 import jakarta.transaction.Transactional;
@@ -70,6 +72,21 @@ public class StudentAdditionManagementImpl implements StudentAdditionManagement 
     @Override
     public ArrayList<String> notifyUnregisteredStudents(ArrayList<Long> jobId) {
         return studentAdditionService.notifyUnregisteredStudents(jobId);
+    }
+
+    @Override
+    public void addNotificationData(NotificationDto notificationDto) {
+        studentAdditionService.addNotificationData(notificationDto);
+    }
+
+    @Override
+    public List<NotificationDto> getNotificationData(String receiverId) {
+       return studentAdditionService.getNotificationData(receiverId);
+    }
+
+    @Override
+    public void updateNotificationStatus(NotificationStatusReq notificationStatusReq) {
+        studentAdditionService.updateNotificationStatus(notificationStatusReq);
     }
 
     StudentAdditionDto getBranchId(StudentAdditionDto studentAdditionDto)

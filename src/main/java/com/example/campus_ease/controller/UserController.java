@@ -3,12 +3,17 @@ package com.example.campus_ease.controller;
 import com.example.campus_ease.management.CcpdAdditionManagement;
 import com.example.campus_ease.management.StudentAdditionManagement;
 import com.example.campus_ease.mapper.CcpdAdditionMapper;
+import com.example.campus_ease.mapper.NotificationMapper;
 import com.example.campus_ease.mapper.StudentAdditionMapper;
 import com.example.campus_ease.request.CcpdAdditionReq;
+import com.example.campus_ease.request.NotificationReq;
+import com.example.campus_ease.request.NotificationStatusReq;
 import com.example.campus_ease.request.StudentAdditionReq;
 import com.example.campus_ease.response.CcpdRes;
+import com.example.campus_ease.response.NotificationResponse;
 import com.example.campus_ease.response.StudentsRes;
 import com.example.campus_ease.shared.dto.CcpdAdditionDto;
+import com.example.campus_ease.shared.dto.NotificationDto;
 import com.example.campus_ease.shared.dto.StudentAdditionDto;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -29,11 +34,15 @@ public class UserController {
 
    private CcpdAdditionManagement ccpdAdditionManagement;
 
-    public UserController(StudentAdditionManagement studentAdditionManagement, StudentAdditionMapper studentAdditionMapper, CcpdAdditionMapper ccpdAdditionMapper, CcpdAdditionManagement ccpdAdditionManagement) {
+
+   private NotificationMapper notificationMapper;
+
+    public UserController(StudentAdditionManagement studentAdditionManagement, StudentAdditionMapper studentAdditionMapper, CcpdAdditionMapper ccpdAdditionMapper, CcpdAdditionManagement ccpdAdditionManagement, NotificationMapper notificationMapper) {
         this.studentAdditionManagement = studentAdditionManagement;
         this.studentAdditionMapper = studentAdditionMapper;
         this.ccpdAdditionMapper = ccpdAdditionMapper;
         this.ccpdAdditionManagement = ccpdAdditionManagement;
+        this.notificationMapper = notificationMapper;
     }
 
     @PostMapping("/student")
@@ -131,6 +140,40 @@ public ResponseEntity<List<StudentsRes>> getRegisteredStudents(@RequestParam Arr
     public ResponseEntity<ArrayList<String>> notifyUnregisteredStudents(@RequestParam ArrayList<Long> jobId){
         ArrayList<String> unregistered = studentAdditionManagement.notifyUnregisteredStudents(jobId);
         return ResponseEntity.ok().body(unregistered);
+    }
+
+
+    @PostMapping("/notification/data")
+    public ResponseEntity<String> addNotificationData(@RequestBody NotificationReq notificationReq){
+        ArrayList<String> receiverId = notificationReq.getReceiverId();
+        for (String receiver: receiverId) {
+            NotificationDto notificationDto = new NotificationDto();
+            notificationDto.setReceiverId(receiver);
+            notificationDto.setContent(notificationReq.getContent());
+            notificationDto.setStatus(notificationReq.getStatus());
+            studentAdditionManagement.addNotificationData(notificationDto);
+        }
+        return ResponseEntity.ok().body("Records added successfully");
+    }
+
+
+    @GetMapping ("/notification/data/{receiverId}")
+    public ResponseEntity<List<NotificationResponse>> getNotificationData(@PathVariable String receiverId){
+        List<NotificationDto> notificationDto = studentAdditionManagement.getNotificationData(receiverId);
+        List<NotificationResponse> notificationResponses = new ArrayList<>();
+        for (NotificationDto notificationData:notificationDto) {
+            NotificationResponse notificationResponse = notificationMapper.notificationDtoToNotificationResponse(notificationData);
+            notificationResponses.add(notificationResponse);
+        }
+        return ResponseEntity.ok().body(notificationResponses);
+    }
+
+
+    @PostMapping ("/notification/status")
+    public ResponseEntity<String> updateNotificationStatus(@RequestBody NotificationStatusReq notificationStatusReq)
+    {
+        studentAdditionManagement.updateNotificationStatus(notificationStatusReq);
+        return ResponseEntity.ok().body("Status updated successfully");
     }
 
 

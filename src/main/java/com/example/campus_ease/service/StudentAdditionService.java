@@ -1,5 +1,7 @@
 package com.example.campus_ease.service;
 
+import com.example.campus_ease.request.NotificationStatusReq;
+import com.example.campus_ease.shared.dto.NotificationDto;
 import com.example.campus_ease.shared.dto.StudentAdditionDto;
 
 import java.util.ArrayList;
@@ -25,4 +27,10 @@ public interface StudentAdditionService {
     ArrayList<String> notifyRegisteredStudents(ArrayList<Long> jobId);
 
     ArrayList<String> notifyUnregisteredStudents(ArrayList<Long> jobId);
+
+    void addNotificationData(NotificationDto notificationDto);
+
+    List<NotificationDto> getNotificationData(String receiverId);
+
+    void updateNotificationStatus(NotificationStatusReq notificationStatusReq);
 }

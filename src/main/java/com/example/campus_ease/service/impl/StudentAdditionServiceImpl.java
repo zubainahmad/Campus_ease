@@ -1,10 +1,15 @@
 package com.example.campus_ease.service.impl;
 
 import com.example.campus_ease.dao.JobPostedRepo;
+import com.example.campus_ease.dao.NotificationRepo;
 import com.example.campus_ease.dao.StudentInfoRepo;
+import com.example.campus_ease.entity.NotificationInfoEntity;
 import com.example.campus_ease.entity.StudentInfoEntity;
+import com.example.campus_ease.mapper.NotificationMapper;
 import com.example.campus_ease.mapper.StudentAdditionMapper;
+import com.example.campus_ease.request.NotificationStatusReq;
 import com.example.campus_ease.service.StudentAdditionService;
+import com.example.campus_ease.shared.dto.NotificationDto;
 import com.example.campus_ease.shared.dto.StudentAdditionDto;
 import com.example.campus_ease.shared.utils.enums.Branch;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -27,13 +32,18 @@ public class StudentAdditionServiceImpl implements StudentAdditionService {
 
     private JobPostedRepo jobPostedRepo;
 
+    private NotificationRepo notificationRepo;
+
+    private NotificationMapper notificationMapper;
 
     private EntityManager entityManager;
 
-    public StudentAdditionServiceImpl(StudentInfoRepo studentInfoRepo, StudentAdditionMapper studentAdditionMapper, JobPostedRepo jobPostedRepo, EntityManager entityManager) {
+    public StudentAdditionServiceImpl(StudentInfoRepo studentInfoRepo, StudentAdditionMapper studentAdditionMapper, JobPostedRepo jobPostedRepo, NotificationRepo notificationRepo, NotificationMapper notificationMapper, EntityManager entityManager) {
         this.studentInfoRepo = studentInfoRepo;
         this.studentAdditionMapper = studentAdditionMapper;
         this.jobPostedRepo = jobPostedRepo;
+        this.notificationRepo = notificationRepo;
+        this.notificationMapper = notificationMapper;
         this.entityManager = entityManager;
     }
 
@@ -181,6 +191,34 @@ public class StudentAdditionServiceImpl implements StudentAdditionService {
 
         ArrayList<String> unregistered = jobPostedRepo.findIdsUnregistered(name);
         return unregistered;
+    }
+
+    @Override
+    public void addNotificationData(NotificationDto notificationDto) {
+        NotificationInfoEntity notificationInfoEntity = notificationMapper.notificationDtoToNotificationInfoEntity(notificationDto);
+        notificationRepo.save(notificationInfoEntity);
+    }
+
+    @Override
+    public List<NotificationDto> getNotificationData(String receiverId) {
+        List<NotificationInfoEntity> notificationInfoEntities = notificationRepo.findByReceiverId(receiverId);
+        List<NotificationDto> notificationDtos = new ArrayList<>();
+        for(NotificationInfoEntity notificationInfoEntity : notificationInfoEntities)
+        {
+            NotificationDto notificationDto = notificationMapper.notificationInfoEntityToNotificationDto(notificationInfoEntity);
+            notificationDtos.add(notificationDto);
+        }
+        return notificationDtos;
+    }
+
+    @Override
+    public void updateNotificationStatus(NotificationStatusReq notificationStatusReq) {
+        ArrayList<Long> notificationId = notificationStatusReq.getId();
+        for (Long id: notificationId) {
+            NotificationInfoEntity notificationInfoEntity = notificationRepo.findById(id).orElse(null);
+            notificationInfoEntity.setStatus(notificationStatusReq.getStatus());
+            notificationRepo.save(notificationInfoEntity);
+        }
     }
 
     String  getBranchNameByString(Long branchId)
