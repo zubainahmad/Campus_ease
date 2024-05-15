@@ -309,7 +309,7 @@ curl --location --request GET 'https://campus-ease.onrender.com/notification/dat
 
 ## Update notification status
 
-</br>j
+</br>
 
 ```
 
