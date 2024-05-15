@@ -270,6 +270,30 @@ curl --location 'https://campus-ease.onrender.com/ccpd/gssgsdgsgr' \
 
 ```
 
+## Placement Data
+
+</br>
+
+```
+curl --location 'https://campus-ease.onrender.com/jobs/placement/data?id=552'
+
+```
+
+## Add placement record
+
+</br>
+
+```
+
+curl --location 'https://campus-ease.onrender.com/jobs/students/placed' \
+--header 'Content-Type: application/json' \
+--data '{
+    "companyName" : "Wipro",
+    "id" : ["2","3","5"]
+}'
+
+```
+
 
 
 
