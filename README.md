@@ -259,6 +259,19 @@ curl --location 'https://campus-ease.onrender.com/students/notify/unregistered?j
 ```
 
 
+## CCPD profile
+
+</br>
+
+```
+curl --location 'https://campus-ease.onrender.com/ccpd/gssgsdgsgr' \
+--header 'Content-Type: application/json' \
+--data ''
+
+```
+
+
+
 
 
 
