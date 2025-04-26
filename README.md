@@ -1,6 +1,8 @@
 # Campus_ease
 Db architecture:
 https://app.diagrams.net/#G1jZOP27qZXdIYPmND2ZcnE7PFPvgogr05#%7B%22pageId%22%3A%22f6ZiSZmucwdAltETV9TF%22%7D
+</br>
+</br>
 End Points:
 </br>
 </br>
